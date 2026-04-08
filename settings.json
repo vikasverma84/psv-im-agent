@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl*)",
+      "Bash(printf*)",
+      "Bash(jq*)",
+      "Bash(neo --version)",
+      "Bash(neo login*)",
+      "Bash(neo pull*)",
+      "Bash(neo push*)",
+      "Bash(neo validate*)",
+      "Bash(neo logs*)",
+      "Bash(neo execute*)",
+      "Bash(git log*)",
+      "Bash(git blame*)",
+      "Bash(git diff*)",
+      "Bash(git show*)",
+      "Read(/**)",
+      "Write(/**)",
+      "Edit(/**)"
+    ]
+  }
+}
