@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PSV-IM Agent — Presentation</title>
+<title>PSV-IM Agent &mdash; Presentation (v2)</title>
 <style>
 :root{--bg:#ffffff;--surface:#f5f7fa;--card:#ffffff;--border:#e2e6ef;--text:#1a1d26;--dim:#6b7280;--primary:#2563eb;--primary-light:#3b82f6;--accent:#7c3aed;--green:#16a34a;--red:#dc2626;--orange:#d97706;--purple:#7c3aed;--cyan:#0891b2;--pink:#db2777;--yellow:#ca8a04;}
 *{margin:0;padding:0;box-sizing:border-box;}
@@ -14,19 +14,19 @@ body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-ap
 .slide.prev{opacity:0;transform:translateX(-60px);}
 .nav{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:14px;z-index:100;background:var(--surface);padding:8px 18px;border-radius:40px;border:1px solid var(--border);}
 .nav-btn{width:36px;height:36px;border-radius:50%;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;transition:.2s;}
-.nav-btn:hover{background:var(--primary);border-color:var(--primary);}
+.nav-btn:hover{background:var(--primary);border-color:var(--primary);color:#fff;}
 .nav-btn:disabled{opacity:.3;cursor:default;}
-.nav-btn:disabled:hover{background:var(--card);border-color:var(--border);}
+.nav-btn:disabled:hover{background:var(--card);border-color:var(--border);color:var(--text);}
 .slide-counter{font-size:12px;color:var(--dim);min-width:55px;text-align:center;}
 .dots{display:flex;gap:5px;}
 .dot{width:7px;height:7px;border-radius:50%;background:var(--border);cursor:pointer;transition:.2s;}
 .dot.active{background:var(--primary);width:20px;border-radius:4px;}
 .progress{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--accent),var(--pink));transition:width .4s ease;z-index:100;}
 h1{font-size:46px;font-weight:800;line-height:1.15;letter-spacing:-1px;}
-h2{font-size:34px;font-weight:700;margin-bottom:20px;letter-spacing:-.5px;}
-h3{font-size:18px;font-weight:600;margin-bottom:10px;}
+h2{font-size:32px;font-weight:700;margin-bottom:18px;letter-spacing:-.5px;}
+h3{font-size:16px;font-weight:600;margin-bottom:8px;}
 .gradient-text{background:linear-gradient(135deg,var(--primary),var(--accent),var(--pink));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
-.subtitle{font-size:18px;color:var(--dim);margin-top:14px;line-height:1.5;max-width:750px;text-align:center;}
+.subtitle{font-size:17px;color:var(--dim);margin-top:14px;line-height:1.5;max-width:750px;text-align:center;}
 .tag{display:inline-block;padding:3px 10px;border-radius:16px;font-size:11px;font-weight:600;}
 .t-blue{background:rgba(37,99,235,.1);color:var(--primary);}
 .t-green{background:rgba(22,163,74,.1);color:var(--green);}
@@ -36,85 +36,65 @@ h3{font-size:18px;font-weight:600;margin-bottom:10px;}
 .t-cyan{background:rgba(8,145,178,.1);color:var(--cyan);}
 .t-pink{background:rgba(219,39,119,.1);color:var(--pink);}
 .t-yellow{background:rgba(202,138,4,.1);color:var(--yellow);}
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px;width:100%;max-width:1100px;}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:18px;width:100%;max-width:1200px;}
-.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;width:100%;max-width:1200px;}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;transition:.3s;box-shadow:0 1px 3px rgba(0,0,0,.06);}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:100%;max-width:1100px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;width:100%;max-width:1200px;}
+.grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;width:100%;max-width:1200px;}
+.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;transition:.3s;box-shadow:0 1px 3px rgba(0,0,0,.06);}
 .card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 6px 24px rgba(37,99,235,.12);}
-.card p{font-size:13px;color:var(--dim);line-height:1.5;}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:18px;text-align:center;}
-.stat-num{font-size:38px;font-weight:800;}
-.stat-label{font-size:12px;color:var(--dim);margin-top:2px;}
-.two-col{display:flex;gap:40px;width:100%;max-width:1100px;align-items:start;}
+.card p{font-size:12px;color:var(--dim);line-height:1.5;}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px;text-align:center;}
+.stat-num{font-size:36px;font-weight:800;}
+.stat-label{font-size:11px;color:var(--dim);margin-top:2px;}
+.two-col{display:flex;gap:36px;width:100%;max-width:1100px;align-items:start;}
 .two-col .col{flex:1;}
-table{width:100%;border-collapse:collapse;font-size:13px;}
-th,td{padding:8px 14px;text-align:left;border-bottom:1px solid var(--border);}
-th{color:var(--dim);font-size:11px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;}
+table{width:100%;border-collapse:collapse;font-size:12px;}
+th,td{padding:6px 12px;text-align:left;border-bottom:1px solid var(--border);}
+th{color:var(--dim);font-size:10px;text-transform:uppercase;letter-spacing:.5px;font-weight:600;}
 .title-slide{text-align:center;}
-.company-badge{font-size:13px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
-.title-meta{display:flex;gap:20px;margin-top:24px;justify-content:center;flex-wrap:wrap;}
+.company-badge{font-size:12px;color:var(--dim);letter-spacing:2px;text-transform:uppercase;margin-bottom:16px;}
+.title-meta{display:flex;gap:16px;margin-top:20px;justify-content:center;flex-wrap:wrap;}
 .flow-vert{display:flex;flex-direction:column;align-items:center;gap:2px;max-width:1000px;width:100%;}
-.flow-row{display:flex;align-items:center;gap:12px;width:100%;}
-.flow-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:10px 14px;text-align:center;flex:1;font-size:13px;font-weight:500;transition:.3s;}
-.flow-box:hover{border-color:var(--primary);}
-.flow-box .fl-label{font-size:10px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:2px;}
-.flow-box .fl-name{font-weight:700;font-size:14px;}
-.flow-arrow-down{color:var(--dim);font-size:16px;margin:2px 0;}
-.flow-parallel{display:flex;gap:10px;width:100%;}
+.flow-row{display:flex;align-items:center;gap:10px;width:100%;}
+.flow-box{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:8px 12px;text-align:center;flex:1;font-size:12px;font-weight:500;}
+.flow-box .fl-label{font-size:9px;color:var(--dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:1px;}
+.flow-box .fl-name{font-weight:700;font-size:13px;}
+.flow-arrow-down{color:var(--dim);font-size:14px;margin:1px 0;}
+.flow-parallel{display:flex;gap:8px;width:100%;}
 .flow-parallel .flow-box{flex:1;}
-.has-tag{display:flex;align-items:center;gap:6px;}
-.quote{background:var(--card);border-left:4px solid var(--accent);border-radius:0 10px 10px 0;padding:16px 24px;font-style:italic;color:var(--dim);font-size:15px;max-width:800px;line-height:1.6;margin-bottom:24px;}
-.phase-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:16px 20px;position:relative;overflow:hidden;}
+.hub-diagram{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:1000px;width:100%;}
+.hub-core{background:linear-gradient(135deg,rgba(37,99,235,.06),rgba(124,58,237,.06));border:2px solid var(--primary);border-radius:14px;padding:18px 36px;text-align:center;}
+.hub-core h3{color:var(--primary);margin-bottom:4px;font-size:18px;}
+.hub-core p{font-size:11px;color:var(--dim);}
+.hub-slots{display:flex;gap:12px;width:100%;}
+.hub-slot{flex:1;background:var(--card);border:2px solid var(--green);border-radius:10px;padding:14px;text-align:center;}
+.hub-slot .slot-team{font-size:13px;font-weight:700;margin-bottom:4px;}
+.hub-slot .slot-components{font-size:10px;color:var(--dim);line-height:1.5;}
+.hub-arrow{font-size:18px;color:var(--dim);}
+.phase-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:14px 18px;position:relative;overflow:hidden;}
 .phase-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;border-radius:4px 0 0 4px;}
 .phase-card.p1::before{background:var(--green);}
 .phase-card.p2::before{background:var(--primary);}
 .phase-card.p3::before{background:var(--orange);}
 .phase-card.p4::before{background:var(--purple);}
-.phase-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
-.phase-header h3{margin:0;font-size:15px;}
-.phase-week{font-size:11px;font-weight:600;padding:2px 10px;border-radius:10px;}
-.phase-items{font-size:12px;color:var(--dim);line-height:1.7;}
-.metric-row{display:flex;align-items:center;gap:12px;margin-bottom:10px;}
-.metric-label{width:160px;font-size:13px;text-align:right;color:var(--dim);}
-.metric-bar{flex:1;height:24px;background:var(--surface);border-radius:4px;overflow:hidden;position:relative;}
-.metric-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:11px;font-weight:700;color:#fff;transition:width .6s;}
-.metric-target{position:absolute;height:100%;border-left:2px dashed var(--yellow);top:0;}
-/* Hub diagram */
-.hub-diagram{display:flex;flex-direction:column;align-items:center;gap:16px;max-width:1000px;width:100%;}
-.hub-core{background:linear-gradient(135deg,rgba(37,99,235,.06),rgba(124,58,237,.06));border:2px solid var(--primary);border-radius:16px;padding:20px 40px;text-align:center;box-shadow:0 4px 20px rgba(37,99,235,.1);}
-.hub-core h3{color:var(--primary);margin-bottom:4px;font-size:20px;}
-.hub-core p{font-size:12px;color:var(--dim);}
-.hub-slots{display:flex;gap:14px;width:100%;}
-.hub-slot{flex:1;background:var(--card);border:2px dashed var(--border);border-radius:12px;padding:16px;text-align:center;transition:.3s;}
-.hub-slot.active{border-style:solid;border-color:var(--green);}
-.hub-slot .slot-team{font-size:14px;font-weight:700;margin-bottom:6px;}
-.hub-slot .slot-components{font-size:11px;color:var(--dim);line-height:1.5;}
-.hub-slot .slot-status{margin-top:8px;font-size:11px;font-weight:600;}
-.hub-arrow{font-size:20px;color:var(--dim);}
-/* Classification badges */
-.classify-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;max-width:700px;}
-.classify-box{background:var(--card);border-radius:10px;padding:14px 18px;border-left:4px solid;}
-.classify-box h4{font-size:14px;margin-bottom:4px;}
-.classify-box p{font-size:12px;color:var(--dim);line-height:1.4;}
-/* API table */
-.api-group{margin-bottom:16px;}
-.api-group h4{font-size:13px;color:var(--primary);margin-bottom:6px;text-transform:uppercase;letter-spacing:.5px;}
-.api-row{display:flex;align-items:center;gap:8px;padding:4px 0;font-size:12px;}
-.api-method{font-weight:700;font-size:10px;padding:2px 6px;border-radius:4px;min-width:36px;text-align:center;}
-.api-method.post{background:rgba(22,163,74,.1);color:var(--green);}
-.api-method.get{background:rgba(37,99,235,.1);color:var(--primary);}
-.api-path{color:var(--text);font-family:'Cascadia Code','Consolas',monospace;font-size:11px;}
-.api-desc{color:var(--dim);font-size:11px;}
+.phase-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;}
+.phase-header h3{margin:0;font-size:14px;}
+.phase-week{font-size:10px;font-weight:600;padding:2px 10px;border-radius:10px;}
+.phase-items{font-size:11px;color:var(--dim);line-height:1.6;}
+.metric-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+.metric-label{width:180px;font-size:12px;text-align:right;color:var(--dim);}
+.metric-bar{flex:1;height:22px;background:var(--surface);border-radius:4px;overflow:hidden;position:relative;}
+.metric-fill{height:100%;border-radius:4px;display:flex;align-items:center;padding-left:8px;font-size:10px;font-weight:700;color:#fff;}
 kbd{background:var(--surface);border:1px solid var(--border);border-radius:4px;padding:1px 6px;font-size:10px;font-family:inherit;}
 .kb-hint{position:fixed;bottom:28px;right:28px;font-size:11px;color:var(--dim);z-index:100;}
 .slide.active .fi{animation:fadeUp .5s ease both;}
 .slide.active .fi:nth-child(2){animation-delay:.1s;}
 .slide.active .fi:nth-child(3){animation-delay:.2s;}
-.slide.active .fi:nth-child(4){animation-delay:.3s;}
-.slide.active .fi:nth-child(5){animation-delay:.4s;}
-.slide.active .fi:nth-child(6){animation-delay:.5s;}
-.slide.active .fi:nth-child(7){animation-delay:.6s;}
-@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+.slide.active .fi:nth-child(4){animation-delay:.25s;}
+.slide.active .fi:nth-child(5){animation-delay:.3s;}
+.slide.active .fi:nth-child(6){animation-delay:.35s;}
+.slide.active .fi:nth-child(7){animation-delay:.4s;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:translateY(0);}}
+code{background:var(--surface);padding:1px 5px;border-radius:4px;font-size:11px;font-family:'Cascadia Code','Consolas',monospace;}
 </style>
 </head>
 <body>
@@ -125,330 +105,431 @@ kbd{background:var(--surface);border:1px solid var(--border);border-radius:4px;p
 <div class="slide active title-slide" data-slide="0">
   <div class="company-badge fi">Capillary Technologies &bull; PSV Delivery</div>
   <h1 class="fi"><span class="gradient-text">PSV-IM Agent</span></h1>
-  <p class="subtitle fi">Autonomous hub for PSV incident management &mdash; polls Jira, validates against BRD/SDD, classifies concerns, routes to team skills, and resolves bugs with human approval at the gate.</p>
+  <p class="subtitle fi">Autonomous incident management for PSV &mdash; webhook + polling triggers, BRD/SDD validation, 5-Whys RCA with evidence collection, team skill routing, QA retry loop, human approval gate, and SLA monitoring.</p>
   <div class="title-meta fi">
-    <span class="tag t-green">Standalone &mdash; No Chatbot</span>
-    <span class="tag t-blue">10 AI Agents</span>
-    <span class="tag t-purple">Pluggable Team Skills</span>
-    <span class="tag t-orange">Component-Based Routing</span>
-    <span class="tag t-cyan">Atlassian + Capillary MCP</span>
+    <span class="tag t-green">50+ Features Built</span>
+    <span class="tag t-blue">13 Pipeline Stages</span>
+    <span class="tag t-purple">4 Team Skills Active</span>
+    <span class="tag t-orange">Webhook + Polling</span>
+    <span class="tag t-cyan">7 Guardrails</span>
+  </div>
+  <div class="title-meta fi">
+    <span class="tag t-red">318 Tests (100%)</span>
+    <span class="tag t-pink">SLA Auto-Escalation</span>
+    <span class="tag t-yellow">10 Bugs Fixed</span>
   </div>
   <div class="title-meta fi"><span style="color:var(--dim);">Vikas Verma &bull; IM Team &bull; April 2026</span></div>
 </div>
 
-<!-- S2: Vision -->
+<!-- S2: Architecture -->
 <div class="slide" data-slide="1">
-  <h2 class="fi"><span class="gradient-text">The Vision</span></h2>
-  <div class="quote fi">"The bot should self-resolve as much as possible. TAMs/IMs see tickets getting resolved. SA/PM/Dev involvement only kicks in when absolutely necessary. Each team plugs in their own skill &mdash; the hub just routes and orchestrates."</div>
-  <div class="grid-3 fi">
-    <div class="card" style="border-color:var(--green);">
-      <h3 style="color:var(--green);">Hub + Team Skills</h3>
-      <p>The agent owns the pipeline. Each team (Integration, WebApp, Mobile, Config) attaches their own skill for domain-specific investigation and fixes. No monolith.</p>
-    </div>
-    <div class="card" style="border-color:var(--primary);">
-      <h3 style="color:var(--primary);">BRD/SDD Validation</h3>
-      <p>Every ticket is validated against design docs before investigation. Bug vs SDD Gap vs BRD Gap vs CR &mdash; only bugs enter the fix pipeline. Gaps escalate.</p>
-    </div>
-    <div class="card" style="border-color:var(--orange);">
-      <h3 style="color:var(--orange);">Fully Standalone</h3>
-      <p>No chatbot dependency. Talks directly to Atlassian MCP (Jira + Confluence) and Capillary MCP (platform APIs). All state is local files.</p>
-    </div>
-  </div>
-</div>
-
-<!-- S3: Hub Architecture -->
-<div class="slide" data-slide="2">
-  <h2 class="fi">Hub Architecture</h2>
+  <h2 class="fi">Architecture &mdash; <span class="gradient-text">Hub + Skills</span></h2>
   <div class="hub-diagram fi">
     <div class="hub-core">
       <h3>PSV-IM Agent Hub</h3>
-      <p>Poll &rarr; Parse &rarr; Context &rarr; Classify &rarr; RCA &rarr; Route &rarr; QA &rarr; Approve &rarr; Report</p>
+      <p>Webhook/Poll &rarr; Quality Gate &rarr; Parse &rarr; Context &rarr; Classify &rarr; RCA &rarr; Evidence &rarr; Route &rarr; Skill &rarr; QA &rarr; Approve &rarr; Report</p>
     </div>
     <div class="hub-arrow">&darr; Component field determines routing &darr;</div>
     <div class="hub-slots">
-      <div class="hub-slot">
-        <div class="slot-team" style="color:var(--cyan);">Integration Skill</div>
-        <div class="slot-components">Integrations<br>Data-Ingestion</div>
-        <div class="slot-status t-orange">Pending &mdash; Team builds</div>
-      </div>
-      <div class="hub-slot">
-        <div class="slot-team" style="color:var(--green);">WebApp Skill</div>
-        <div class="slot-components">Webapp-CRM</div>
-        <div class="slot-status t-orange">Pending &mdash; Team builds</div>
-      </div>
-      <div class="hub-slot">
-        <div class="slot-team" style="color:var(--pink);">Mobile Skill</div>
-        <div class="slot-components">MobileApp-CRM</div>
-        <div class="slot-status t-orange">Pending &mdash; Team builds</div>
-      </div>
-      <div class="hub-slot">
-        <div class="slot-team" style="color:var(--purple);">Config Skill</div>
-        <div class="slot-components">Configurations<br>US_Configuration</div>
-        <div class="slot-status t-orange">Pending &mdash; Team builds</div>
-      </div>
+      <div class="hub-slot"><div class="slot-team" style="color:var(--cyan);">Integration Skill</div><div class="slot-components">Integrations &bull; Data-Ingestion</div><div style="margin-top:6px;"><span class="tag t-green">Active</span></div></div>
+      <div class="hub-slot"><div class="slot-team" style="color:var(--green);">WebApp Skill</div><div class="slot-components">Webapp-CRM</div><div style="margin-top:6px;"><span class="tag t-green">Active</span></div></div>
+      <div class="hub-slot"><div class="slot-team" style="color:var(--pink);">Mobile Skill</div><div class="slot-components">MobileApp-CRM</div><div style="margin-top:6px;"><span class="tag t-green">Active</span></div></div>
+      <div class="hub-slot"><div class="slot-team" style="color:var(--purple);">Config Skill</div><div class="slot-components">Configurations &bull; US_Config</div><div style="margin-top:6px;"><span class="tag t-green">Active</span></div></div>
     </div>
-    <div style="font-size:12px;color:var(--dim);margin-top:8px;">Each team builds &amp; attaches their own skill following the <strong style="color:var(--text);">Skill Interface Contract</strong>. No skill registered = escalate to human.</div>
+    <div style="font-size:11px;color:var(--dim);margin-top:6px;">Skills live in <code>skills/{skill-id}/SKILL.md</code> (git-tracked). Teams update via PR. Stage 5 loads SKILL.md as domain context for Claude investigation.</div>
   </div>
 </div>
 
-<!-- S4: Pipeline -->
-<div class="slide" data-slide="3">
-  <h2 class="fi">Pipeline &mdash; 10 Stages</h2>
+<!-- S3: Pipeline -->
+<div class="slide" data-slide="2">
+  <h2 class="fi">Pipeline &mdash; 13 Stages</h2>
   <div class="flow-vert fi">
-    <div class="flow-row"><div class="flow-box" style="border-color:var(--cyan);"><div class="fl-label">Stage 0</div><div class="fl-name">Jira Poller</div><span style="font-size:10px;color:var(--dim);">Every 3 min &bull; P0/P1 &bull; PSV project</span></div></div>
+    <div class="flow-parallel">
+      <div class="flow-box" style="border-color:var(--cyan);"><div class="fl-label">Stage 0</div><div class="fl-name">Webhook / Poller</div><span style="font-size:9px;color:var(--dim);">Dual trigger &bull; dedup &bull; P0/P1</span></div>
+      <div class="flow-box" style="border-color:var(--green);"><div class="fl-label">Stage 1</div><div class="fl-name">Ticket Parser</div><span style="font-size:9px;color:var(--dim);">Comments &bull; links &bull; IDs</span></div>
+    </div>
     <div class="flow-arrow-down">&#x25BC;</div>
-    <div class="flow-row"><div class="flow-box" style="border-color:var(--green);"><div class="fl-label">Stage 1</div><div class="fl-name">Ticket Parser</div><span style="font-size:10px;color:var(--dim);">Brand, component (routing key), org ID, dataflow ID</span></div></div>
+    <div class="flow-parallel">
+      <div class="flow-box" style="border-color:var(--yellow);"><div class="fl-label">Stage 1b</div><div class="fl-name">Attachments</div><span style="font-size:9px;color:var(--dim);">Download HAR &bull; logs &bull; JSON</span></div>
+      <div class="flow-box" style="border-color:var(--red);background:rgba(239,68,68,.04);"><div class="fl-label">Stage 1c &mdash; GATE</div><div class="fl-name">Quality Score</div><span style="font-size:9px;color:var(--dim);">0-100 score &bull; &lt;30 = block</span></div>
+    </div>
     <div class="flow-arrow-down">&#x25BC;</div>
-    <div class="flow-row"><div class="flow-box" style="border-color:var(--primary);"><div class="fl-label">Stage 2a</div><div class="fl-name">Context Agent</div><span style="font-size:10px;color:var(--dim);">BRD/SDD from Confluence via Atlassian MCP + local cache</span></div></div>
-    <div class="flow-arrow-down">&#x25BC;</div>
-    <div class="flow-row"><div class="flow-box" style="border-color:var(--red);background:rgba(239,68,68,.05);"><div class="fl-label">Stage 2b &mdash; GATE</div><div class="fl-name">Classifier</div><span style="font-size:10px;color:var(--dim);">Bug &rarr; continue &bull; SDD Gap &rarr; SA &bull; BRD Gap &rarr; PM &bull; CR &rarr; CR workflow</span></div></div>
+    <div class="flow-parallel">
+      <div class="flow-box" style="border-color:var(--primary);"><div class="fl-label">Stage 2a</div><div class="fl-name">BRD/SDD Context</div><span style="font-size:9px;color:var(--dim);">Confluence MCP + 7-day cache</span></div>
+      <div class="flow-box" style="border-color:var(--red);background:rgba(239,68,68,.04);"><div class="fl-label">Stage 2b &mdash; GATE</div><div class="fl-name">Classifier</div><span style="font-size:9px;color:var(--dim);">Bug/SDD Gap/BRD Gap/CR &bull; 5-factor confidence</span></div>
+    </div>
     <div class="flow-arrow-down">&#x25BC; Bug only</div>
     <div class="flow-parallel">
-      <div class="flow-box" style="border-color:var(--purple);"><div class="fl-label">Stage 3a</div><div class="fl-name">5-Whys RCA</div><span style="font-size:10px;color:var(--dim);">Opus &bull; iterative root cause</span></div>
-      <div class="flow-box" style="border-color:var(--orange);"><div class="fl-label">Stage 3b</div><div class="fl-name">KB Correlation</div><span style="font-size:10px;color:var(--dim);">&gt;80% match = fast path</span></div>
+      <div class="flow-box" style="border-color:var(--purple);"><div class="fl-label">Stage 3a (parallel)</div><div class="fl-name">5-Whys RCA</div><span style="font-size:9px;color:var(--dim);">Claude + comments + attachments</span></div>
+      <div class="flow-box" style="border-color:var(--orange);"><div class="fl-label">Stage 3b (parallel)</div><div class="fl-name">KB Search</div><span style="font-size:9px;color:var(--dim);">Cross-project + linked issues</span></div>
     </div>
-    <div class="flow-arrow-down">&#x25BC;</div>
-    <div class="flow-row"><div class="flow-box" style="border-color:var(--cyan);"><div class="fl-label">Stage 4</div><div class="fl-name">Component Router</div><span style="font-size:10px;color:var(--dim);">Component &rarr; team skill dispatch</span></div></div>
-    <div class="flow-arrow-down">&#x25BC;</div>
-    <div class="flow-row"><div class="flow-box" style="border-color:var(--yellow);border-width:2px;"><div class="fl-label">Stage 5</div><div class="fl-name">Team Skill</div><span style="font-size:10px;color:var(--dim);">External &mdash; team-owned investigate &rarr; fix &rarr; test</span></div></div>
     <div class="flow-arrow-down">&#x25BC;</div>
     <div class="flow-parallel">
-      <div class="flow-box" style="border-color:var(--pink);"><div class="fl-label">Stage 6</div><div class="fl-name">QA Agent</div><span style="font-size:10px;color:var(--dim);">Score /13 &bull; retry 3x</span></div>
-      <div class="flow-box" style="border-color:var(--green);"><div class="fl-label">Stage 7</div><div class="fl-name">Approval Gate</div><span style="font-size:10px;color:var(--dim);">Human APPROVE / REJECT</span></div>
-      <div class="flow-box" style="border-color:var(--primary);"><div class="fl-label">Stage 8</div><div class="fl-name">Reporter</div><span style="font-size:10px;color:var(--dim);">Jira comment + KB + metrics</span></div>
+      <div class="flow-box" style="border-color:var(--cyan);"><div class="fl-label">Stage 3c</div><div class="fl-name">Evidence Gather</div><span style="font-size:9px;color:var(--dim);">Debug APIs &bull; EMF &bull; versions</span></div>
+      <div class="flow-box" style="border-color:var(--cyan);"><div class="fl-label">Stage 4</div><div class="fl-name">Component Router</div><span style="font-size:9px;color:var(--dim);">Component &rarr; skill dispatch</span></div>
+    </div>
+    <div class="flow-arrow-down">&#x25BC;</div>
+    <div class="flow-parallel">
+      <div class="flow-box" style="border-color:var(--yellow);border-width:2px;"><div class="fl-label">Stage 5</div><div class="fl-name">Team Skill</div><span style="font-size:9px;color:var(--dim);">SKILL.md loaded &bull; Claude investigation</span></div>
+      <div class="flow-box" style="border-color:var(--yellow);"><div class="fl-label">Stage 5b</div><div class="fl-name">Chatbot Delegation</div><span style="font-size:9px;color:var(--dim);">Request API calls if low confidence</span></div>
+    </div>
+    <div class="flow-arrow-down">&#x25BC;</div>
+    <div class="flow-parallel">
+      <div class="flow-box" style="border-color:var(--pink);"><div class="fl-label">Stage 6</div><div class="fl-name">QA (3x retry)</div><span style="font-size:9px;color:var(--dim);">Score /13 &bull; retry Stage 5</span></div>
+      <div class="flow-box" style="border-color:var(--green);"><div class="fl-label">Stage 7</div><div class="fl-name">Approval Gate</div><span style="font-size:9px;color:var(--dim);">JIRA comment polling</span></div>
+      <div class="flow-box" style="border-color:var(--primary);"><div class="fl-label">Stage 8</div><div class="fl-name">Reporter</div><span style="font-size:9px;color:var(--dim);">JIRA + KB + metrics</span></div>
     </div>
   </div>
 </div>
 
-<!-- S5: Classification Gate -->
+<!-- S4: Triggers & Resume -->
+<div class="slide" data-slide="3">
+  <h2 class="fi">Triggers &mdash; <span class="gradient-text">Webhook + Polling + Resume</span></h2>
+  <div class="grid-3 fi">
+    <div class="card" style="border-color:var(--primary);">
+      <h3 style="color:var(--primary);">Webhook (Port 8089)</h3>
+      <p>Receives JIRA <code>issue_created</code> + <code>issue_updated</code> events. Rate limited (30/min per IP). HMAC signature validation. Instant response to new tickets.</p>
+    </div>
+    <div class="card" style="border-color:var(--green);">
+      <h3 style="color:var(--green);">Polling (Every 3 min)</h3>
+      <p>JQL query: <code>statusCategory in ("To Do","In Progress")</code> + <code>Bug, CR, P0 Alert</code>. Catches anything webhook missed. Every 5th cycle scans waiting tickets for updates.</p>
+    </div>
+    <div class="card" style="border-color:var(--orange);">
+      <h3 style="color:var(--orange);">Resume on Update</h3>
+      <p>When a ticket in <code>WAITING_FOR_INFO</code> or <code>AWAITING_APPROVAL</code> is updated, pipeline resumes from blocked stage. Works via both webhook and proactive polling.</p>
+    </div>
+  </div>
+  <div class="grid-2 fi" style="margin-top:18px;">
+    <div class="card" style="border-color:var(--red);">
+      <h3 style="color:var(--red);">Dedup (2 layers)</h3>
+      <p><strong>In-memory:</strong> shared <code>known_keys</code> set across poller + webhook.<br><strong>JIRA-level:</strong> <code>psv-im-processing</code> label filter in JQL. Survives restart.</p>
+    </div>
+    <div class="card" style="border-color:var(--purple);">
+      <h3 style="color:var(--purple);">JIRA Status Transitions</h3>
+      <p>Open &rarr; Under review &rarr; In Dev &rarr; Dev Fixed &rarr; Ready For QA &rarr; Closed. Also: Needs More Info (waiting), escalation labels.</p>
+    </div>
+  </div>
+</div>
+
+<!-- S5: Investigation Accuracy -->
 <div class="slide" data-slide="4">
-  <h2 class="fi">BRD/SDD Validation <span style="font-size:20px;color:var(--red);">&mdash; The Gate</span></h2>
-  <p class="subtitle fi" style="margin-bottom:28px;">Every ticket is validated against design documents before entering the investigation pipeline. Only confirmed bugs proceed.</p>
-  <div class="two-col fi">
-    <div class="col">
-      <h3 style="color:var(--primary);margin-bottom:14px;">How It Works</h3>
-      <table>
-        <tr><th>SDD</th><th>BRD</th><th>Classification</th><th>Action</th></tr>
-        <tr><td style="color:var(--green);">Covered</td><td style="color:var(--green);">Covered</td><td><span class="tag t-red">Bug</span></td><td>Investigate + Fix</td></tr>
-        <tr><td style="color:var(--red);">Missing</td><td style="color:var(--green);">Covered</td><td><span class="tag t-orange">SDD Gap</span></td><td>Escalate to SA</td></tr>
-        <tr><td style="color:var(--red);">Missing</td><td style="color:var(--red);">Missing</td><td><span class="tag t-purple">BRD Gap</span></td><td>Escalate to PM</td></tr>
-        <tr><td colspan="2" style="color:var(--dim);">Enhancement language</td><td><span class="tag t-blue">CR</span></td><td>CR workflow</td></tr>
-      </table>
-      <div style="margin-top:16px;">
-        <h3 style="color:var(--orange);margin-bottom:8px;">BRD/SDD Sources</h3>
-        <div style="font-size:13px;color:var(--dim);line-height:1.8;">
-          <strong style="color:var(--text);">1.</strong> Local cache (7-day TTL)<br>
-          <strong style="color:var(--text);">2.</strong> Atlassian MCP &rarr; Confluence SA + AG spaces<br>
-          <strong style="color:var(--text);">3.</strong> Jira ticket links / description URLs<br>
-          <strong style="color:var(--text);">4.</strong> Broad Atlassian search (last resort)
-        </div>
-      </div>
+  <h2 class="fi">Investigation Accuracy &mdash; <span class="gradient-text">8 Data Sources</span></h2>
+  <div class="grid-4 fi">
+    <div class="card" style="border-color:var(--green);padding:14px;">
+      <h3 style="color:var(--green);font-size:13px;">Ticket Comments</h3>
+      <p>Parsed for JSON responses, HTTP status codes, error patterns. IDs extracted from comments too.</p>
     </div>
-    <div class="col">
-      <div class="classify-grid">
-        <div class="classify-box" style="border-color:var(--red);">
-          <h4 style="color:var(--red);">Bug</h4>
-          <p>SDD says X should happen, but Y is happening. Behavior contradicts design. &rarr; Full pipeline runs.</p>
-        </div>
-        <div class="classify-box" style="border-color:var(--orange);">
-          <h4 style="color:var(--orange);">SDD Gap</h4>
-          <p>BRD requires it, but SDD has no design for this scenario. &rarr; SA must add missing design.</p>
-        </div>
-        <div class="classify-box" style="border-color:var(--purple);">
-          <h4 style="color:var(--purple);">BRD Gap</h4>
-          <p>Neither SDD nor BRD covers this. Undocumented requirement. &rarr; PM must evaluate scope.</p>
-        </div>
-        <div class="classify-box" style="border-color:var(--primary);">
-          <h4 style="color:var(--primary);">Change Request</h4>
-          <p>User wants different behavior than designed. Not a failure. &rarr; Route to CR workflow.</p>
-        </div>
-      </div>
-      <div style="margin-top:14px;padding:12px 16px;background:var(--surface);border-radius:8px;font-size:12px;color:var(--dim);">
-        <strong style="color:var(--yellow);">No docs available?</strong> Defaults to Bug with low confidence (0.3). Better to investigate than miss a real bug.
-      </div>
+    <div class="card" style="border-color:var(--primary);padding:14px;">
+      <h3 style="color:var(--primary);font-size:13px;">Linked Issues</h3>
+      <p>Duplicates (0.95 score), relates-to, blockers. Checked before KB search.</p>
+    </div>
+    <div class="card" style="border-color:var(--cyan);padding:14px;">
+      <h3 style="color:var(--cyan);font-size:13px;">Attachments</h3>
+      <p>Downloaded + parsed: HAR files (requests/responses), log files (error lines), JSON (API errors).</p>
+    </div>
+    <div class="card" style="border-color:var(--purple);padding:14px;">
+      <h3 style="color:var(--purple);font-size:13px;">Capillary Debug APIs</h3>
+      <p>error-events, block-stats, route-events, jobs. Called based on RCA data_requests.</p>
+    </div>
+    <div class="card" style="border-color:var(--orange);padding:14px;">
+      <h3 style="color:var(--orange);font-size:13px;">Cross-Project KB</h3>
+      <p>Searches PSV + CAP + INTG for resolved tickets. Same bug fixed by another team = instant match.</p>
+    </div>
+    <div class="card" style="border-color:var(--pink);padding:14px;">
+      <h3 style="color:var(--pink);font-size:13px;">BRD/SDD Context</h3>
+      <p>Confluence SA + AG spaces. Brand aliases expanded. Relevant sections scored by keyword overlap.</p>
+    </div>
+    <div class="card" style="border-color:var(--yellow);padding:14px;">
+      <h3 style="color:var(--yellow);font-size:13px;">Dataflow Versions</h3>
+      <p>Version history fetched when dataflow_id present. Detects regression (recent deploy broke it).</p>
+    </div>
+    <div class="card" style="border-color:var(--red);padding:14px;">
+      <h3 style="color:var(--red);font-size:13px;">EMF Logs (stub)</h3>
+      <p>Configurable EMF_API_URL. Searches by request ID. Gracefully disabled when unconfigured.</p>
+    </div>
+  </div>
+  <div class="fi" style="margin-top:14px;">
+    <div class="card" style="border-color:var(--accent);padding:12px 18px;max-width:700px;">
+      <h3 style="color:var(--accent);font-size:13px;">5-Factor Confidence Breakdown</h3>
+      <p>doc_quality (20%) + symptom_clarity (25%) + evidence_strength (30%) + pattern_match (15%) + data_completeness (10%) = weighted overall score. Shows WHY confidence is high or low.</p>
     </div>
   </div>
 </div>
 
-<!-- S6: Component Router & Team Skills -->
+<!-- S6: Security -->
 <div class="slide" data-slide="5">
-  <h2 class="fi">Component Router &mdash; Team Skill Slots</h2>
-  <div class="two-col fi">
-    <div class="col">
-      <h3 style="color:var(--cyan);margin-bottom:14px;">Component &rarr; Skill Mapping</h3>
-      <table>
-        <tr><th>PSV Component</th><th>Team Skill</th><th>% Tickets</th></tr>
-        <tr><td>Integrations</td><td style="color:var(--cyan);">integration-skill</td><td>~35%</td></tr>
-        <tr><td>Configurations</td><td style="color:var(--purple);">config-skill</td><td>~25%</td></tr>
-        <tr><td>Data-Ingestion</td><td style="color:var(--cyan);">integration-skill</td><td>~15%</td></tr>
-        <tr><td>Webapp-CRM</td><td style="color:var(--green);">webapp-skill</td><td>~10%</td></tr>
-        <tr><td>BAU-QA</td><td style="color:var(--orange);">qa-skill</td><td>~8%</td></tr>
-        <tr><td>MobileApp-CRM</td><td style="color:var(--pink);">mobile-skill</td><td>~3%</td></tr>
-        <tr><td style="color:var(--dim);">7 others</td><td style="color:var(--red);">ESCALATE</td><td>~4%</td></tr>
-      </table>
+  <h2 class="fi">Security &mdash; <span class="gradient-text">6 Hardening Measures</span></h2>
+  <div class="grid-3 fi">
+    <div class="card" style="border-color:var(--red);padding:16px;">
+      <h3 style="color:var(--red);font-size:13px;">Injection Prevention</h3>
+      <p><strong>CQL:</strong> <code>_escape_cql()</code> escapes quotes in Confluence queries.<br><strong>JQL:</strong> Keywords filtered to alphanumeric, component escaped.<br>Prevents query manipulation from ticket data.</p>
     </div>
-    <div class="col">
-      <h3 style="color:var(--green);margin-bottom:14px;">Skill Interface Contract</h3>
-      <div class="card" style="padding:14px;border-color:var(--green);">
-        <p style="font-size:12px;color:var(--text);line-height:1.7;">
-          <strong>Hub provides:</strong><br>
-          &bull; Parsed ticket (brand, component, org ID, dataflow ID)<br>
-          &bull; BRD/SDD context + relevant sections<br>
-          &bull; 5-Whys RCA hypothesis + data requests<br>
-          &bull; KB matches from past resolutions<br>
-          &bull; Brand config (cluster URL, Connect+ URL)<br><br>
-          <strong>Team skill returns:</strong><br>
-          &bull; Investigation findings + evidence<br>
-          &bull; Fix proposal (DEMO only, reversible)<br>
-          &bull; Test results (smoke + regression)
-        </p>
-      </div>
-      <div style="margin-top:12px;font-size:12px;color:var(--dim);">
-        Each team creates <code style="background:var(--surface);padding:2px 6px;border-radius:4px;">~/.claude/skills/{skill-id}/</code> with a <code style="background:var(--surface);padding:2px 6px;border-radius:4px;">/investigate</code> command. Minimal skill: ~50 lines.
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- S7: Capillary APIs -->
-<div class="slide" data-slide="6">
-  <h2 class="fi">Capillary Platform APIs <span style="font-size:18px;color:var(--dim);">&mdash; via MCP</span></h2>
-  <div class="grid-3 fi" style="max-width:1150px;">
-    <div class="card" style="border-color:var(--cyan);padding:16px;">
-      <h3 style="color:var(--cyan);font-size:14px;margin-bottom:10px;">Neo Debug Mode</h3>
-      <div class="api-row"><span class="api-method post">POST</span><span class="api-path">/debug-mode/error-events/{id}</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Dataflow error messages + severity</span></div>
-      <div class="api-row"><span class="api-method post">POST</span><span class="api-path">/debug-mode/block-stats/{id}</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Per-block input/output/failure counts</span></div>
-      <div class="api-row"><span class="api-method post">POST</span><span class="api-path">/debug-mode/route-events</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Trace events through pipeline blocks</span></div>
-      <div class="api-row"><span class="api-method post">POST</span><span class="api-path">/debug-mode/jobs</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Job history, record counts, errors</span></div>
+    <div class="card" style="border-color:var(--orange);padding:16px;">
+      <h3 style="color:var(--orange);font-size:13px;">Path Traversal</h3>
+      <p>Brand names sanitized to <code>[a-zA-Z0-9_-]</code> before use in file paths. <code>realpath()</code> validates no directory escape from <code>state/</code> base.</p>
     </div>
     <div class="card" style="border-color:var(--purple);padding:16px;">
-      <h3 style="color:var(--purple);font-size:14px;margin-bottom:10px;">Audit Trail</h3>
-      <div class="api-row"><span class="api-method get">GET</span><span class="api-path">/v2/unified-audits</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">All changes: action, entity, before/after</span></div>
-      <div class="api-row"><span class="api-method get">GET</span><span class="api-path">/v2/events/audit_logs</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Event-level audit trail</span></div>
-      <div class="api-row"><span class="api-method get">GET</span><span class="api-path">/v2/events/logs</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Events by date range + name</span></div>
-      <div class="api-row"><span class="api-method get">GET</span><span class="api-path">/v1.1/request/logs</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Goodwill / ID change / txn update logs</span></div>
+      <h3 style="color:var(--purple);font-size:13px;">Webhook Auth</h3>
+      <p>HMAC-SHA256 signature validation when <code>WEBHOOK_SECRET</code> configured. Per-IP rate limiting (30 req/min). Client IP logged on failures.</p>
+    </div>
+    <div class="card" style="border-color:var(--primary);padding:16px;">
+      <h3 style="color:var(--primary);font-size:13px;">Error Data Leak</h3>
+      <p>Exception details logged locally only. JIRA comments get generic "check agent logs" message. No stack traces, connection strings, or internal paths exposed.</p>
+    </div>
+    <div class="card" style="border-color:var(--cyan);padding:16px;">
+      <h3 style="color:var(--cyan);font-size:13px;">API Validation</h3>
+      <p>All Capillary API IDs validated as alphanumeric before URL interpolation. Size params clamped to prevent abuse.</p>
     </div>
     <div class="card" style="border-color:var(--green);padding:16px;">
-      <h3 style="color:var(--green);font-size:14px;margin-bottom:10px;">Customer + Transaction</h3>
-      <div class="api-row"><span class="api-method get">GET</span><span class="api-path">/v2/customers/{id}/statusLog</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Tier/status change history</span></div>
-      <div class="api-row"><span class="api-method post">POST</span><span class="api-path">/v2/transactions/searchEvaluationLog</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Why did a rule fire/not fire?</span></div>
-      <div class="api-row"><span class="api-method get">GET</span><span class="api-path">/v2/card/statusLog</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Card lifecycle events</span></div>
-      <div class="api-row"><span class="api-method get">GET</span><span class="api-path">/v3/webHooks/eventLog/{id}</span></div>
-      <div class="api-row" style="margin-left:44px;"><span class="api-desc">Webhook delivery trace</span></div>
+      <h3 style="color:var(--green);font-size:13px;">Secrets Management</h3>
+      <p><code>.env</code> gitignored. Never committed. <code>.env.example</code> has placeholders only. All credentials load via pydantic-settings.</p>
     </div>
-  </div>
-  <div class="fi" style="margin-top:16px;display:flex;gap:12px;">
-    <span class="tag t-green">MemberCare: UI-only &mdash; use customer APIs</span>
-    <span class="tag t-cyan">DevConsole: covered by debug-mode APIs</span>
-    <span class="tag t-purple">EMF Logs: covered by error-events + route-events</span>
   </div>
 </div>
 
-<!-- S8: What's Built -->
-<div class="slide" data-slide="7">
-  <h2 class="fi">What's Built</h2>
+<!-- S7: Quality Gate + SLA -->
+<div class="slide" data-slide="6">
+  <h2 class="fi">Quality Gate + <span class="gradient-text">SLA Monitoring</span></h2>
   <div class="two-col fi">
     <div class="col">
-      <h3 style="color:var(--green);margin-bottom:12px;">PSV-IM Agent Hub (21 files)</h3>
+      <h3 style="color:var(--red);margin-bottom:12px;">Quality Gate (Stage 1c)</h3>
+      <p style="font-size:12px;color:var(--dim);margin-bottom:12px;">Scores tickets 0-100 before running Claude. Low-quality tickets get a detailed "please add" comment instead of wasting API calls.</p>
       <table>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> SKILL.md &mdash; 10-stage orchestrator</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> Jira Poller (continuous, concurrent)</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> Ticket Parser (field extraction)</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> Context Agent (Confluence via MCP)</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> Classifier (BRD/SDD validation gate)</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> 5-Whys RCA Agent (Opus)</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> KB Correlation Agent</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> Component Router</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> QA Agent (score /13)</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> Approval Gate (human review)</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> Reporter (KB + metrics)</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> 3 slash commands + 5 references</td></tr>
-        <tr><td class="has-tag"><span class="tag t-green">&#x2713;</span> Skill Interface Contract</td></tr>
+        <tr><th>Factor</th><th>Points</th></tr>
+        <tr><td>Description quality</td><td>0-15</td></tr>
+        <tr><td>Expected vs Actual behavior</td><td>0-20</td></tr>
+        <tr><td>Identifiers (org_id, customer_id)</td><td>0-15</td></tr>
+        <tr><td>Evidence (request_id, logs, attachments)</td><td>0-20</td></tr>
+        <tr><td>SDD/BRD reference</td><td>0-15</td></tr>
+        <tr><td>Reproduction steps</td><td>0-15</td></tr>
+      </table>
+      <div style="margin-top:10px;padding:10px;background:var(--surface);border-radius:8px;font-size:11px;color:var(--dim);">
+        <strong style="color:var(--red);">Score &lt; 30</strong> &rarr; Pipeline stops, comment posted, ticket moves to "Needs More Info". Agent resumes when reporter updates.
+      </div>
+    </div>
+    <div class="col">
+      <h3 style="color:var(--orange);margin-bottom:12px;">SLA Auto-Escalation</h3>
+      <p style="font-size:12px;color:var(--dim);margin-bottom:12px;">Background loop every 10 min. Scans active workflows, compares timestamps against thresholds. JIRA comment + Slack/Teams alert on breach.</p>
+      <table>
+        <tr><th>Priority</th><th>Waiting Info</th><th>Approval</th><th>Total</th></tr>
+        <tr><td><span class="tag t-red">P0</span></td><td>4h</td><td>8h</td><td>24h</td></tr>
+        <tr><td><span class="tag t-orange">P1</span></td><td>12h</td><td>24h</td><td>72h</td></tr>
+        <tr><td><span class="tag t-blue">P2</span></td><td>48h</td><td>72h</td><td>7d</td></tr>
+        <tr><td><span class="tag t-purple">P3</span></td><td>5d</td><td>7d</td><td>14d</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- S8: Chatbot Integration -->
+<div class="slide" data-slide="7">
+  <h2 class="fi">IM Chatbot <span class="gradient-text">Integration</span></h2>
+  <p class="subtitle fi" style="margin-bottom:20px;">Agent delegates API calls to the IM Chatbot (which has per-brand credentials) instead of managing secrets itself.</p>
+  <div class="grid-2 fi" style="max-width:900px;">
+    <div class="card" style="border-color:var(--primary);padding:16px;">
+      <h3 style="color:var(--primary);font-size:14px;">Agent (Brain)</h3>
+      <p style="font-size:12px;line-height:1.7;">
+        Runs full pipeline (Stages 0-5)<br>
+        Identifies which APIs to call<br>
+        Posts structured JIRA comment:<br>
+        <em>"IM Chatbot &mdash; please execute:<br>
+        1. GET /v2/customers/{id}/statusLog<br>
+        2. POST /searchEvaluationLog"</em><br>
+        Sets WAITING_FOR_INFO, pauses.
+      </p>
+    </div>
+    <div class="card" style="border-color:var(--green);padding:16px;">
+      <h3 style="color:var(--green);font-size:14px;">Chatbot (Hands)</h3>
+      <p style="font-size:12px;line-height:1.7;">
+        Has per-brand OAuth credentials<br>
+        Reads the agent's JIRA comment<br>
+        Executes API calls with brand auth<br>
+        Posts JSON responses as comments<br>
+        Agent resumes, extracts JSON evidence<br>
+        Re-runs Stage 5 with real data.
+      </p>
+    </div>
+  </div>
+  <div class="fi" style="margin-top:16px;display:flex;gap:10px;">
+    <span class="tag t-green">No credential duplication</span>
+    <span class="tag t-blue">Audit trail in JIRA comments</span>
+    <span class="tag t-purple">Works with any brand</span>
+    <span class="tag t-orange">Merge planned for shared backend</span>
+  </div>
+</div>
+
+<!-- S9: What's Built -->
+<div class="slide" data-slide="8">
+  <h2 class="fi">What's Built &mdash; <span class="gradient-text">44+ Features</span></h2>
+  <div class="two-col fi">
+    <div class="col">
+      <h3 style="color:var(--green);font-size:13px;margin-bottom:10px;">Core Pipeline (13 stages)</h3>
+      <div style="font-size:11px;color:var(--dim);line-height:1.7;">
+        Webhook server (port 8089) + Polling (3 min)<br>
+        Ticket parser (comments, links, attachments, IDs)<br>
+        Attachment download + parse (HAR, logs, JSON)<br>
+        Quality gate (0-100 score, blocks &lt;30)<br>
+        Confluence BRD/SDD fetch (7-day cache)<br>
+        Classifier (5-factor confidence breakdown)<br>
+        5-Whys RCA (with evidence from 8 sources)<br>
+        KB search (cross-project PSV+CAP+INTG)<br>
+        Evidence gathering (debug APIs, EMF, versions)<br>
+        Component router (4 skills + keyword fallback)<br>
+        Team skill investigation (SKILL.md loaded)<br>
+        QA retry loop (3x, score /13)<br>
+        Approval gate (JIRA comment polling)<br>
+        Reporter (comment + KB + metrics)
+      </div>
+    </div>
+    <div class="col">
+      <h3 style="color:var(--primary);font-size:13px;margin-bottom:10px;">Infrastructure + Safety</h3>
+      <div style="font-size:11px;color:var(--dim);line-height:1.7;">
+        Dual trigger with shared dedup<br>
+        Resume on update (WAITING_FOR_INFO + APPROVAL)<br>
+        Proactive polling for waiting tickets<br>
+        JIRA status transitions (full PSV workflow)<br>
+        SLA monitoring (background, priority-based)<br>
+        Slack + Teams notifications (P0, escalations)<br>
+        Dashboard endpoints (/metrics, /workflows)<br>
+        7 guardrails (injection, schema, hallucination, cost, filter)<br>
+        318 tests (100% pass, 0 API calls)<br>
+        10 production bugs found + fixed<br>
+        Skills in git repo (teams update via PR)<br>
+        Parallel stage execution (3a + 3b)
+      </div>
+      <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;">
+        <div class="stat-card" style="padding:8px 14px;"><div class="stat-num" style="font-size:28px;color:var(--green);">35+</div><div class="stat-label">Files</div></div>
+        <div class="stat-card" style="padding:8px 14px;"><div class="stat-num" style="font-size:28px;color:var(--primary);">7000+</div><div class="stat-label">Lines</div></div>
+        <div class="stat-card" style="padding:8px 14px;"><div class="stat-num" style="font-size:28px;color:var(--red);">318</div><div class="stat-label">Tests</div></div>
+        <div class="stat-card" style="padding:8px 14px;"><div class="stat-num" style="font-size:28px;color:var(--orange);">8</div><div class="stat-label">Services</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- S10: Endpoints & Deployment -->
+<div class="slide" data-slide="9">
+  <h2 class="fi">Deployment &mdash; <span class="gradient-text">3 Run Modes</span></h2>
+  <div class="grid-3 fi">
+    <div class="card" style="border-color:var(--green);padding:16px;">
+      <h3 style="color:var(--green);font-size:14px;">Polling + Webhook</h3>
+      <p><code>python main.py</code><br><br>Default mode. Polls every 3 min + webhook on :8089 (if <code>WEBHOOK_ENABLED=true</code>). SLA monitor runs in background.</p>
+    </div>
+    <div class="card" style="border-color:var(--primary);padding:16px;">
+      <h3 style="color:var(--primary);font-size:14px;">Webhook Only</h3>
+      <p><code>python main.py --webhook-only</code><br><br>No polling. Pure event-driven. Instant response. Ideal for production with JIRA webhook configured.</p>
+    </div>
+    <div class="card" style="border-color:var(--orange);padding:16px;">
+      <h3 style="color:var(--orange);font-size:14px;">Single Ticket</h3>
+      <p><code>python main.py --investigate PSV-12345</code><br><br>Analyze one ticket. Shows results first, asks before posting to JIRA. Safe for testing.</p>
+    </div>
+  </div>
+  <div class="grid-2 fi" style="margin-top:16px;">
+    <div class="card" style="padding:14px;">
+      <h3 style="font-size:13px;">HTTP Endpoints (webhook server)</h3>
+      <table>
+        <tr><td><code>POST /webhook/jira</code></td><td>JIRA event handler</td></tr>
+        <tr><td><code>GET /health</code></td><td>Health check</td></tr>
+        <tr><td><code>GET /dashboard/metrics</code></td><td>Aggregate pipeline stats</td></tr>
+        <tr><td><code>GET /dashboard/workflows</code></td><td>Active workflow list</td></tr>
+      </table>
+    </div>
+    <div class="card" style="padding:14px;">
+      <h3 style="font-size:13px;">GitHub Repository</h3>
+      <p style="font-size:12px;line-height:1.7;">
+        <strong>Repo:</strong> <code>Capillary/psv_ai_im_chatbot</code><br>
+        <strong>Branch:</strong> main (18+ commits)<br>
+        <strong>Skills:</strong> <code>skills/</code> directory (git-tracked)<br>
+        <strong>Config:</strong> <code>.env.example</code> (no secrets)<br>
+        <strong>State:</strong> <code>state/</code> (gitignored)
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- S11: Guardrails + Eval -->
+<div class="slide" data-slide="10">
+  <h2 class="fi">Guardrails + <span class="gradient-text">Eval Suite</span></h2>
+  <div class="two-col fi">
+    <div class="col">
+      <h3 style="color:var(--red);font-size:13px;margin-bottom:10px;">7 Safety Guardrails</h3>
+      <table>
+        <tr><th>Guardrail</th><th>What it does</th></tr>
+        <tr><td>Prompt injection</td><td>12 regex patterns, strips + logs attempts</td></tr>
+        <tr><td>Schema validation</td><td>Required fields, enum values, numeric ranges</td></tr>
+        <tr><td>Auto-fix</td><td>Case mismatches, clamps ranges, fills defaults</td></tr>
+        <tr><td>Hallucination check</td><td>Verifies SDD sections + API endpoints exist</td></tr>
+        <tr><td>Content filtering</td><td>Redacts API keys, tokens, paths before JIRA</td></tr>
+        <tr><td>Cost tracking</td><td>10 calls/ticket, 500/day, 2M tokens/day</td></tr>
+        <tr><td>Safe JSON parse</td><td>BOM strip, fence removal, non-dict wrapping</td></tr>
       </table>
     </div>
     <div class="col">
-      <h3 style="color:var(--orange);margin-bottom:12px;">Teams Build (per contract)</h3>
+      <h3 style="color:var(--green);font-size:13px;margin-bottom:10px;">318 Tests &mdash; 100% Pass</h3>
       <table>
-        <tr><th>Team</th><th>Skill</th><th>Status</th></tr>
-        <tr><td>Integration</td><td><code style="font-size:11px;">integration-skill</code></td><td><span class="tag t-orange">Pending</span></td></tr>
-        <tr><td>WebApp</td><td><code style="font-size:11px;">webapp-skill</code></td><td><span class="tag t-orange">Pending</span></td></tr>
-        <tr><td>Mobile</td><td><code style="font-size:11px;">mobile-skill</code></td><td><span class="tag t-orange">Pending</span></td></tr>
-        <tr><td>Config</td><td><code style="font-size:11px;">config-skill</code></td><td><span class="tag t-orange">Pending</span></td></tr>
-        <tr><td>QA</td><td><code style="font-size:11px;">qa-skill</code></td><td><span class="tag t-orange">Pending</span></td></tr>
+        <tr><th>Suite</th><th>Cases</th><th>API Calls</th></tr>
+        <tr><td>Component tests</td><td>299</td><td>0 (free)</td></tr>
+        <tr><td>Guardrail tests</td><td>15</td><td>0 (free)</td></tr>
+        <tr><td>Quality scorer</td><td>4</td><td>0 (free)</td></tr>
+        <tr><td>Classification</td><td>5</td><td>5 Claude</td></tr>
       </table>
-      <div style="margin-top:16px;">
-        <h3 style="color:var(--primary);margin-bottom:8px;">Minimal Skill = 3 files</h3>
-        <div style="font-size:12px;color:var(--dim);line-height:1.8;font-family:'Cascadia Code',monospace;">
-          SKILL.md &nbsp;&mdash; metadata + components<br>
-          agents/investigator.md &nbsp;&mdash; investigation logic<br>
-          commands/investigate.md &nbsp;&mdash; entry point
-        </div>
-      </div>
-      <div style="margin-top:14px;">
-        <h3 style="color:var(--cyan);margin-bottom:8px;">External Dependencies</h3>
-        <div style="display:flex;gap:8px;flex-wrap:wrap;">
-          <span class="tag t-blue">Atlassian MCP</span>
-          <span class="tag t-cyan">Capillary MCP</span>
-          <span class="tag t-green">Local file state</span>
-        </div>
-        <div style="font-size:11px;color:var(--dim);margin-top:6px;">Zero chatbot dependency. Zero database. Zero server.</div>
+      <div style="margin-top:10px;font-size:11px;color:var(--dim);line-height:1.6;">
+        <strong>12 components tested:</strong> Parser, Router, Attachments, KB, Confidence, SLA, Brand sanitization, Cost tracker, JQL escaping, Confluence extraction, Workflow state, Guardrails.<br><br>
+        <strong>10 production bugs found + fixed:</strong> null JSON, HAR type error, None sanitize, empty fields, state data loss, case-sensitive router, string confidence, empty brand, ADF nodes, negative confidence.
       </div>
     </div>
   </div>
 </div>
 
-<!-- S9: Phases -->
-<div class="slide" data-slide="8">
-  <h2 class="fi">Implementation Phases</h2>
-  <div style="display:flex;flex-direction:column;gap:12px;max-width:1100px;width:100%;" class="fi">
+<!-- S12: Live Demo -->
+<div class="slide" data-slide="11">
+  <h2 class="fi">Live Demo &mdash; <span class="gradient-text">PSV-30220</span></h2>
+  <p class="subtitle fi" style="margin-bottom:16px;">Points balance discrepancy &mdash; Demo Pantaloons. Agent reclassified from BRD_GAP to BUG.</p>
+  <div class="grid-3 fi">
+    <div class="card" style="border-color:var(--red);padding:14px;">
+      <h3 style="color:var(--red);font-size:13px;">Initial Assessment</h3>
+      <p>Ticket's embedded analysis said <strong>BRD_GAP</strong>: "No SDD covers standard points allocation rules."</p>
+    </div>
+    <div class="card" style="border-color:var(--green);padding:14px;">
+      <h3 style="color:var(--green);font-size:13px;">Agent's Correction</h3>
+      <p>Found <strong>Tier Upgrade Delta SDD</strong> which documents this exact failure mode. Reclassified to <strong>BUG</strong>.</p>
+    </div>
+    <div class="card" style="border-color:var(--primary);padding:14px;">
+      <h3 style="color:var(--primary);font-size:13px;">Root Cause (75%)</h3>
+      <p>EMF failed to emit <code>type="slab"</code> in sideEffects. Neo skipped delta adjustment silently. SDD 6.12 Risk #5.</p>
+    </div>
+  </div>
+  <div class="grid-4 fi" style="margin-top:14px;">
+    <div class="stat-card" style="padding:10px;"><div class="stat-num" style="font-size:24px;color:var(--green);">3</div><div class="stat-label">SDDs Found</div></div>
+    <div class="stat-card" style="padding:10px;"><div class="stat-num" style="font-size:24px;color:var(--orange);">75%</div><div class="stat-label">Confidence</div></div>
+    <div class="stat-card" style="padding:10px;"><div class="stat-num" style="font-size:24px;color:var(--red);">1</div><div class="stat-label">Reclassification</div></div>
+    <div class="stat-card" style="padding:10px;"><div class="stat-num" style="font-size:24px;color:var(--primary);">4</div><div class="stat-label">Resolution Paths</div></div>
+  </div>
+  <div class="fi" style="margin-top:14px;font-size:12px;color:var(--dim);max-width:800px;text-align:center;">
+    Full analysis posted as JIRA comment. Pipeline completed Stages 1-5 (waiting for evidence). Identified 4 resolution scenarios with specific fix for each. Saved investigation time by finding the right SDD that the initial analysis missed.
+  </div>
+</div>
+
+<!-- S13: Next Steps -->
+<div class="slide" data-slide="12">
+  <h2 class="fi">Next Steps</h2>
+  <div style="display:flex;flex-direction:column;gap:10px;max-width:1100px;width:100%;" class="fi">
     <div class="phase-card p1">
-      <div class="phase-header"><h3 style="color:var(--green);">Phase 1: Hub Core</h3><span class="phase-week t-green">Done</span></div>
-      <div class="phase-items">SKILL.md orchestrator &bull; 10 agents defined &bull; 3 slash commands (/investigate, /monitor, /team-status) &bull; Skill Interface Contract &bull; Component map &bull; Jira comment templates &bull; Capillary API reference</div>
+      <div class="phase-header"><h3 style="color:var(--green);">Validate</h3><span class="phase-week t-green">This Week</span></div>
+      <div class="phase-items">Run on 10 real P1 tickets via <code>--investigate</code> &bull; Review pipeline output accuracy &bull; Fix edge cases in parsing/classification &bull; Measure Claude API cost per ticket &bull; Verify JIRA status transitions work for all PSV workflows</div>
     </div>
     <div class="phase-card p2">
-      <div class="phase-header"><h3 style="color:var(--primary);">Phase 2: Activate Hub</h3><span class="phase-week t-blue">Week 1</span></div>
-      <div class="phase-items">Wire Jira Poller to Atlassian MCP &bull; Test ticket parser on real PSV tickets &bull; Wire Context Agent to Confluence search &bull; Validate classifier against known tickets &bull; Test 5-Whys on 5 sample P0/P1s</div>
+      <div class="phase-header"><h3 style="color:var(--primary);">Deploy Webhook</h3><span class="phase-week t-blue">Week 2</span></div>
+      <div class="phase-items">Set up ngrok or internal server for webhook endpoint &bull; Register JIRA webhook (Settings &rarr; Webhooks) &bull; Configure <code>WEBHOOK_SECRET</code> for production &bull; Enable Slack notifications for IM team channel</div>
     </div>
     <div class="phase-card p3">
-      <div class="phase-header"><h3 style="color:var(--orange);">Phase 3: First Team Skill</h3><span class="phase-week t-orange">Week 2-3</span></div>
-      <div class="phase-items">Build <strong>integration-skill</strong> (covers ~50% of tickets) &bull; Wire to Neo debug-mode APIs &bull; Wire to dataflow management APIs &bull; End-to-end test: PSV ticket &rarr; classification &rarr; investigation &rarr; Jira comment</div>
+      <div class="phase-header"><h3 style="color:var(--orange);">Merge with Chatbot</h3><span class="phase-week t-orange">Week 3-4</span></div>
+      <div class="phase-items">Shared backend (services, config, database) &bull; Agent uses chatbot's per-brand credentials directly &bull; Single <code>docker-compose.yml</code> deployment &bull; Chatbot UI shows pipeline status</div>
     </div>
     <div class="phase-card p4">
-      <div class="phase-header"><h3 style="color:var(--purple);">Phase 4: Remaining Skills + QA</h3><span class="phase-week t-purple">Week 4-5</span></div>
-      <div class="phase-items">Build config-skill (audit trail APIs) &bull; Distribute Interface Contract to WebApp/Mobile/QA teams &bull; QA Agent validation on real team skill output &bull; Approval Gate flow &bull; KB auto-learning loop</div>
+      <div class="phase-header"><h3 style="color:var(--purple);">Intelligence Layer</h3><span class="phase-week t-purple">Month 2</span></div>
+      <div class="phase-items">Auto-reproduce bugs via API calls &bull; Fix pattern templates per skill &bull; Learning from resolutions &bull; Recurring issue detection &bull; Historical trend analysis &bull; PagerDuty integration for P0</div>
     </div>
-  </div>
-</div>
-
-<!-- S10: Metrics -->
-<div class="slide" data-slide="9">
-  <h2 class="fi">Success Metrics <span style="font-size:18px;color:var(--dim);">(3-month target)</span></h2>
-  <div style="max-width:900px;width:100%;" class="fi">
-    <div class="metric-row"><div class="metric-label">First response time</div><div class="metric-bar"><div class="metric-fill" style="width:80%;background:var(--red);">~4 hours (current)</div><div class="metric-target" style="left:6%;"><span style="position:absolute;top:-18px;left:4px;font-size:10px;color:var(--yellow);">&lt;5 min (bot)</span></div></div></div>
-    <div class="metric-row"><div class="metric-label">MTTR (P0)</div><div class="metric-bar"><div class="metric-fill" style="width:75%;background:var(--red);">~4-6h (current)</div><div class="metric-target" style="left:33%;"><span style="position:absolute;top:-18px;left:4px;font-size:10px;color:var(--yellow);">&lt;2h target</span></div></div></div>
-    <div class="metric-row"><div class="metric-label">MTTR (P1)</div><div class="metric-bar"><div class="metric-fill" style="width:85%;background:var(--orange);">~24h (current)</div><div class="metric-target" style="left:33%;"><span style="position:absolute;top:-18px;left:4px;font-size:10px;color:var(--yellow);">&lt;8h target</span></div></div></div>
-    <div class="metric-row"><div class="metric-label">Auto-classified %</div><div class="metric-bar"><div class="metric-fill" style="width:5%;background:var(--dim);">0%</div><div class="metric-target" style="left:90%;"><span style="position:absolute;top:-18px;right:4px;font-size:10px;color:var(--yellow);">&gt;90%</span></div></div></div>
-    <div class="metric-row"><div class="metric-label">Auto-resolved %</div><div class="metric-bar"><div class="metric-fill" style="width:5%;background:var(--dim);">0%</div><div class="metric-target" style="left:40%;"><span style="position:absolute;top:-18px;left:4px;font-size:10px;color:var(--yellow);">&gt;40% target</span></div></div></div>
-    <div class="metric-row"><div class="metric-label">SLA compliance (P0)</div><div class="metric-bar"><div class="metric-fill" style="width:85%;background:var(--orange);">85% (current)</div><div class="metric-target" style="left:95%;"><span style="position:absolute;top:-18px;right:4px;font-size:10px;color:var(--yellow);">&gt;95%</span></div></div></div>
-    <div class="metric-row"><div class="metric-label">Component coverage</div><div class="metric-bar"><div class="metric-fill" style="width:5%;background:var(--dim);">0% (no skills)</div><div class="metric-target" style="left:75%;"><span style="position:absolute;top:-18px;left:4px;font-size:10px;color:var(--yellow);">&gt;75%</span></div></div></div>
-  </div>
-  <div class="fi" style="margin-top:24px;display:flex;gap:16px;">
-    <div class="stat-card" style="min-width:140px;"><div class="stat-num" style="color:var(--green);">21</div><div class="stat-label">Files created</div></div>
-    <div class="stat-card" style="min-width:140px;"><div class="stat-num" style="color:var(--primary);">10</div><div class="stat-label">AI Agents</div></div>
-    <div class="stat-card" style="min-width:140px;"><div class="stat-num" style="color:var(--purple);">3</div><div class="stat-label">Slash commands</div></div>
-    <div class="stat-card" style="min-width:140px;"><div class="stat-num" style="color:var(--orange);">5</div><div class="stat-label">Team skill slots</div></div>
-    <div class="stat-card" style="min-width:140px;"><div class="stat-num" style="color:var(--cyan);">0</div><div class="stat-label">External servers</div></div>
   </div>
 </div>
 
@@ -458,7 +539,7 @@ kbd{background:var(--surface);border:1px solid var(--border);border-radius:4px;p
 <div class="nav">
   <button class="nav-btn" id="prev" disabled>&#x25C0;</button>
   <div class="dots" id="dots"></div>
-  <div class="slide-counter" id="counter">1 / 10</div>
+  <div class="slide-counter" id="counter">1 / 13</div>
   <button class="nav-btn" id="next">&#x25B6;</button>
 </div>
 <div class="kb-hint"><kbd>&#x2190;</kbd> <kbd>&#x2192;</kbd> to navigate</div>
@@ -475,4 +556,3 @@ prog.style.width=(1/total*100)+'%';
 </script>
 </body>
 </html>
-<!-- cache bust 1775652823 -->
