@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0" />
+<title>PSV-IM Agent — Presentation</title>
+<style>
+  :root {
+    --bg: #0d1117;
+    --panel: #161b22;
+    --border: #30363d;
+    --fg: #c9d1d9;
+    --muted: #8b949e;
+    --accent: #58a6ff;
+    --accent-2: #4ec9b0;
+    --warn: #d29922;
+    --danger: #f85149;
+    --ok: #56d364;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    background: var(--bg);
+    color: var(--fg);
+    font-family: 'JetBrains Mono', 'SF Mono', 'Consolas', 'Menlo', monospace;
+    font-size: 15px;
+    line-height: 1.5;
+    overflow: hidden;
+  }
+  .deck {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    padding: 40px 60px 60px;
+    position: relative;
+  }
+  .slide {
+    display: none;
+    flex: 1;
+    flex-direction: column;
+    overflow-y: auto;
+    animation: fadein .25s ease-out;
+  }
+  .slide.active { display: flex; }
+  @keyframes fadein {
+    from { opacity: 0; transform: translateY(6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  h1, h2, h3 { color: var(--accent-2); font-weight: 600; }
+  h1 { font-size: 2.2em; margin-bottom: 0.4em; letter-spacing: -0.5px; }
+  h2 { font-size: 1.4em; margin-bottom: 1em; padding-bottom: 0.4em; border-bottom: 1px solid var(--border); }
+  h3 { font-size: 1.05em; margin: 1em 0 0.4em; color: var(--accent); }
+  p { margin-bottom: 0.7em; }
+  .tagline {
+    color: var(--muted);
+    font-size: 1.1em;
+    margin-bottom: 2em;
+  }
+  ul, ol { margin: 0.4em 0 0.8em 1.4em; }
+  li { margin-bottom: 0.35em; }
+  pre {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 14px 18px;
+    overflow-x: auto;
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--fg);
+    margin: 0.6em 0;
+  }
+  code {
+    background: var(--panel);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.9em;
+  }
+  pre code { background: transparent; padding: 0; }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin: 0.6em 0;
+  }
+  th, td {
+    text-align: left;
+    padding: 7px 12px;
+    border-bottom: 1px solid var(--border);
+    vertical-align: top;
+  }
+  th {
+    color: var(--accent);
+    font-weight: 600;
+    border-bottom: 2px solid var(--border);
+  }
+  tr:hover td { background: rgba(88, 166, 255, 0.04); }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 16px 20px;
+  }
+  .card h3 { margin-top: 0; }
+  .badge {
+    display: inline-block;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 2px 8px;
+    font-size: 11px;
+    color: var(--muted);
+    margin-right: 6px;
+  }
+  .badge.ok { color: var(--ok); border-color: rgba(86, 211, 100, 0.4); }
+  .badge.warn { color: var(--warn); border-color: rgba(210, 153, 34, 0.4); }
+  .badge.danger { color: var(--danger); border-color: rgba(248, 81, 73, 0.4); }
+  .badge.accent { color: var(--accent); border-color: rgba(88, 166, 255, 0.4); }
+
+  .nav {
+    position: absolute;
+    bottom: 18px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--muted);
+    font-size: 12px;
+    gap: 18px;
+    user-select: none;
+  }
+  .nav button {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    color: var(--fg);
+    padding: 4px 10px;
+    border-radius: 3px;
+    font-family: inherit;
+    font-size: 12px;
+    cursor: pointer;
+  }
+  .nav button:hover { background: var(--border); }
+  .nav .counter { min-width: 80px; text-align: center; }
+  .hint {
+    position: absolute;
+    bottom: 18px;
+    right: 28px;
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .check { color: var(--ok); }
+  .x { color: var(--danger); }
+  .small { font-size: 0.9em; color: var(--muted); }
+  .footer-note {
+    margin-top: auto;
+    padding-top: 12px;
+    color: var(--muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+  }
+  .stage-num {
+    display: inline-block;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--accent);
+    font-size: 11px;
+    margin-right: 6px;
+  }
+  .label {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    padding: 1px 6px;
+    font-size: 11px;
+    color: var(--muted);
+  }
+  .label.green { color: var(--ok); border-color: rgba(86, 211, 100, 0.4); }
+  .label.amber { color: var(--warn); border-color: rgba(210, 153, 34, 0.4); }
+  .label.red { color: var(--danger); border-color: rgba(248, 81, 73, 0.4); }
+  .label.blue { color: var(--accent); border-color: rgba(88, 166, 255, 0.4); }
+</style>
+</head>
+<body>
+<div class="deck" id="deck">
+
+  <!-- Slide 1: Title -->
+  <section class="slide active">
+    <h1>PSV-IM Agent</h1>
+    <div class="tagline">Autonomous incident manager for Capillary's Professional Services org.</div>
+    <p>10-stage async pipeline · code-grounded RCA · GitHub App auth · Facets-ready</p>
+    <div class="grid-3" style="margin-top: 2em;">
+      <div class="card">
+        <h3>What it does</h3>
+        <p class="small">Watches PSV tickets, classifies the concern, pulls the brand's source repo, posts a code-grounded RCA + suggested fix, and tracks SLA.</p>
+      </div>
+      <div class="card">
+        <h3>What's new in v1</h3>
+        <p class="small">GitHub-pull verified end-to-end · push-URL guard · 3-layer credential hygiene · approval-gate auto-escalation.</p>
+      </div>
+      <div class="card">
+        <h3>Status</h3>
+        <p class="small"><span class="badge ok">ready</span> for Facets deploy. Stages 5–7 partial; agent drafts fixes, humans apply.</p>
+      </div>
+    </div>
+    <div class="footer-note">
+      Repo: <code>github.com/Capillary/psv_ai_im_chatbot</code> · main branch · v1 deploy package landed in commit <code>7fbd553</code>
+    </div>
+  </section>
+
+  <!-- Slide 2: Architecture -->
+  <section class="slide">
+    <h2>Architecture at a glance</h2>
+    <pre>
+                         ┌───────────────────────────────┐
+                         │    JIRA Cloud (PSV project)   │
+                         └───────────────────────────────┘
+                            ▲                       │
+                            │ webhook + poll        │ comment + label
+                            ▼                       ▼
+        ┌───────────────────────────────────────────────────┐
+        │                 PSV-IM Agent pod                  │
+        │                                                   │
+        │   webhook_server (8089) ─┬─ /webhook/jira         │
+        │                          ├─ /admin/test-pull/…    │
+        │                          ├─ /dashboard/metrics    │
+        │                          └─ /health               │
+        │                                                   │
+        │           Pipeline (10 stages)                    │
+        │            ├─ Stage 1: parse                      │
+        │            ├─ Stage 2: classify ─────────────►  Anthropic
+        │            ├─ Stage 4: route to team skill        │
+        │            ├─ Stage 3d: code grounding ───────►  GitHub
+        │            ├─ Stage 3a: 5-Whys RCA ───────────►  Anthropic
+        │            ├─ Stage 5: skill execution ──────►  Anthropic
+        │            └─ Stage 8: report ──────────────►  JIRA
+        │                                                   │
+        │           State JSON ─►  /app/state               │
+        │           Repo cache ─►  /var/cache/.../repos     │
+        └───────────────────────────────────────────────────┘
+                                    │
+                                    │ read-only mount
+                                    ▼
+        ┌───────────────────────────────────────────────────┐
+        │       IM Chatbot pod (separate deploy)            │
+        │       Owns:  chatbot.db (brand_repos, KB)         │
+        └───────────────────────────────────────────────────┘
+    </pre>
+    <div class="footer-note">
+      Single-replica today. Async throughout. Scales horizontally once the in-process dedup set is moved to Redis.
+    </div>
+  </section>
+
+  <!-- Slide 3: Pipeline -->
+  <section class="slide">
+    <h2>The 10-stage pipeline</h2>
+    <table>
+      <thead>
+        <tr><th style="width:9%">Stage</th><th style="width:30%">Name</th><th>What it does</th><th style="width:14%">Dependency</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="stage-num">0</span></td><td>Label ticket</td><td>Adds <code>psv-im-processing</code></td><td>JIRA</td></tr>
+        <tr><td><span class="stage-num">1</span></td><td>Parser</td><td>ADF → plaintext, extracts brand / org_id / dataflow</td><td>Haiku</td></tr>
+        <tr><td><span class="stage-num">1c</span></td><td>Quality gate</td><td>Scores ticket completeness</td><td>—</td></tr>
+        <tr><td><span class="stage-num">2a</span></td><td>Context</td><td>Fetches BRD/SDD from Confluence (7-day cache)</td><td>Confluence</td></tr>
+        <tr><td><span class="stage-num">2b</span></td><td>Classify</td><td>Bug / SDD Gap / BRD Gap / CR</td><td>Sonnet</td></tr>
+        <tr><td><span class="stage-num">4</span></td><td>Route</td><td>Maps component → team skill</td><td>—</td></tr>
+        <tr><td><span class="stage-num">3d</span></td><td>Code grounding</td><td>Clones brand repo, greps for ticket tokens, surfaces recent commits</td><td>GitHub</td></tr>
+        <tr><td><span class="stage-num">3a</span></td><td>5-Whys RCA</td><td>Source-aware root-cause hypothesis</td><td>Sonnet</td></tr>
+        <tr><td><span class="stage-num">3b</span></td><td>KB search</td><td>Finds prior resolved tickets ≥0.80 similarity</td><td>SQLite</td></tr>
+        <tr><td><span class="stage-num">3c</span></td><td>Evidence</td><td>Gathers Capillary platform context</td><td>Capillary APIs</td></tr>
+        <tr><td><span class="stage-num">5</span></td><td>Skill investigation</td><td>Runs the routed team skill (abbott / integration / webapp / mobile / config)</td><td>Sonnet</td></tr>
+        <tr><td><span class="stage-num">6</span></td><td>QA verdict</td><td>Template-based scoring; gates Stage 8</td><td>—</td></tr>
+        <tr><td><span class="stage-num">7</span></td><td>Approval gate</td><td>P0: 24h · P1: 72h · auto-escalate on breach</td><td>—</td></tr>
+        <tr><td><span class="stage-num">8</span></td><td>Reporter</td><td>Posts JIRA comment, saves to KB, records metrics</td><td>JIRA</td></tr>
+      </tbody>
+    </table>
+    <div class="footer-note">
+      Stage 4 runs before 3d so the team-skill is known when grounding fires. Stage 3d feeds 3a so RCA is source-aware. <span class="badge accent">order matters</span>
+    </div>
+  </section>
+
+  <!-- Slide 4: Triggers -->
+  <section class="slide">
+    <h2>How tickets enter the pipeline</h2>
+    <div class="grid-2">
+      <div class="card">
+        <h3>Webhook (instant)</h3>
+        <p class="small">JIRA POSTs to <code>/webhook/jira</code> on issue create / update / comment. HMAC-validated against <code>WEBHOOK_SECRET</code>. ~10s to first agent comment.</p>
+        <pre>POST /webhook/jira
+X-Hub-Signature: sha256=…
+{ "webhookEvent": "jira:issue_created",
+  "issue": { "key": "PSV-30534", … } }</pre>
+      </div>
+      <div class="card">
+        <h3>Poller (3-min fallback)</h3>
+        <p class="small">Polls JIRA every 180s with JQL filtering. Catches anything the webhook missed. Shared dedup set with the webhook so the same ticket can't be processed twice.</p>
+        <pre>JQL: project = PSV
+     AND priority in ("Highest-P0","High-P1")
+     AND issuetype in (Bug, "Change Request", "P0 Alert")</pre>
+      </div>
+      <div class="card">
+        <h3>Correction re-run</h3>
+        <p class="small">When a human comments on a ticket the agent already analysed, the agent re-runs Stage 3a + 5 with the human correction folded into the prompt. Only fires for non-agent comments to avoid loops.</p>
+      </div>
+      <div class="card">
+        <h3>Resume (state-aware)</h3>
+        <p class="small">Workflows persist as JSON on PVC. Agent restart → in-flight tickets resume at their last completed stage. Approval-gate breaches auto-escalate on next monitor tick.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 5: Code grounding -->
+  <section class="slide">
+    <h2>Stage 3d — Code grounding (the differentiator)</h2>
+    <p>Without grounding, RCAs reason in the abstract and hallucinate file paths. With grounding, every hypothesis cites real source.</p>
+
+    <h3>The flow</h3>
+    <pre>1. Parse extracts ticket tokens (file refs, API paths, lambda names)
+2. Look up brand_repos for the ticket's Brand field
+3. Shallow-clone the repo (depth=200, ~2-3min cold; ~2s warm fetch)
+4. git grep --fixed-strings for each token
+5. git log --since="30 days ago" for recent commits touching matched paths
+6. Assemble code_grounding state → feeds into 5-Whys prompt</pre>
+
+    <h3>What it produces (real output from PSV-30534)</h3>
+    <pre>STAGE 3d: PSV-30534 — 10 match(es) across 3 commit(s) in
+          file:///C:/Abbott/abbott-global
+
+  matches:
+    SAMBackEnd/layer/controllers/CapillarySalesforceCustomerRegistrationController.mjs:143
+    SAMBackEnd/layer/config/uatImplementations.json:17
+    SAMBackEnd/salesforce-events-capillary-add/salesforceEventsCapillaryAdd.mjs:40
+    …
+  recent_commits:
+    fb4b60d Merge PR #464 from feature/PSV-30140
+    61f545f Remove config from UAT
+    …</pre>
+    <div class="footer-note">
+      Auth in production: GitHub App → JWT → ~1h installation token. Token never persists to <code>.git/config</code>.
+    </div>
+  </section>
+
+  <!-- Slide 6: Security -->
+  <section class="slide">
+    <h2>Security — 3 push-prevention layers</h2>
+    <p>Defense in depth. Even if Layer 1 is misconfigured, Layers 2 and 3 stop a write.</p>
+    <table>
+      <thead><tr><th style="width:8%">#</th><th style="width:18%">Layer</th><th>Mechanism</th><th>If it fails</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><span class="badge accent">1</span></td>
+          <td>External</td>
+          <td>GitHub App scoped <code>Contents: Read</code>. Token can't push by definition.</td>
+          <td>Layers 2 + 3 still block.</td>
+        </tr>
+        <tr>
+          <td><span class="badge accent">2</span></td>
+          <td>Config</td>
+          <td>After every clone/fetch, <code>git remote set-url --push origin do-not-push://psv-im-agent-is-read-only/</code></td>
+          <td>Layer 3 still blocks.</td>
+        </tr>
+        <tr>
+          <td><span class="badge accent">3</span></td>
+          <td>Code</td>
+          <td>Every <code>git</code> subcommand checked against <code>_ALLOWED_GIT_SUBCOMMANDS</code> allowlist. <code>push</code>, <code>commit</code>, <code>merge</code>, <code>rebase</code>, <code>tag</code>, <code>submodule</code> raise before exec.</td>
+          <td>—</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <h3>Credential hygiene</h3>
+    <ul>
+      <li><span class="check">✓</span> Authed clone URL never persists to <code>.git/config</code> — wiped immediately after clone</li>
+      <li><span class="check">✓</span> Installation token lives in process memory only (~1h TTL)</li>
+      <li><span class="check">✓</span> Secret + PII redaction on every grep match (<code>SECRET_PATTERNS</code>: AWS keys, GH tokens, JWTs, PEMs, emails, phones)</li>
+      <li><span class="check">✓</span> <code>/admin/test-pull</code> verifies <code>credential_in_config: false</code> per brand</li>
+    </ul>
+    <div class="footer-note">
+      Verified end-to-end: GitHub clone of <code>Capillary/abbott-global</code> finished in 2m20s. Push URL = <code>do-not-push://…</code>. Zero credentials in <code>.git/config</code>.
+    </div>
+  </section>
+
+  <!-- Slide 7: Quality gates & SLA -->
+  <section class="slide">
+    <h2>Quality gates &amp; SLA</h2>
+
+    <h3>Coverage gate (between Stage 2b and Stage 4)</h3>
+    <p class="small">If classification confidence is low AND no BRD/SDD coverage was found, the agent <strong>refuses to post speculative findings</strong>. It escalates with <code>psv-im-needs-human</code> instead.</p>
+    <pre>if classification.confidence &lt; 0.30 AND
+   context.brd_coverage == NOT_COVERED AND
+   context.sdd_coverage == NOT_COVERED:
+       → escalate ("Needs Human Investigation")</pre>
+
+    <h3>Approval gate (Stage 7)</h3>
+    <table>
+      <thead><tr><th>Priority</th><th>SLA</th><th>Reminders</th><th>Breach action</th></tr></thead>
+      <tbody>
+        <tr><td>P0 (Highest)</td><td>24 hours</td><td>50% / 75% / 95%</td><td>auto-escalate to <code>psv-im-needs-human</code></td></tr>
+        <tr><td>P1 (High)</td><td>72 hours</td><td>50% / 75% / 95%</td><td>auto-escalate</td></tr>
+      </tbody>
+    </table>
+    <p class="small">Reminder severities escalate: <span class="label amber">warning</span> → <span class="label amber">warning</span> → <span class="label red">critical</span>. Idempotent — restart can't re-fire prior nudges.</p>
+
+    <h3>QA verdict (Stage 6)</h3>
+    <p class="small">Template-based scoring (out of 13 criteria). Score &lt;9/13 → retry up to 2x. Score &lt;9/13 after 2 retries → escalate.</p>
+  </section>
+
+  <!-- Slide 8: Chatbot integration -->
+  <section class="slide">
+    <h2>Chatbot integration</h2>
+    <p>Two pods, one shared volume. Agent reads, chatbot writes.</p>
+
+    <pre>┌──────────────────┐   read-only PVC mount   ┌──────────────────┐
+│  PSV-IM Agent    │ ◄────────────────────── │  IM Chatbot      │
+│                  │                         │  (owns DB)       │
+│  reads:          │                         │  writes:         │
+│   - brand_repos  │                         │   - brand_repos  │
+│   - brand_creds  │                         │   - brand_creds  │
+│   - knowledge_b. │                         │   - knowledge_b. │
+│   - brand_docs   │                         │   - brand_docs   │
+│                  │   POST /api/internal    │                  │
+│  publishes:      │ ──────────────────────► │                  │
+│   - repo snapshots                         │   stores as      │
+│   - repo metrics                           │   doc_type=other │
+│                  │  shared INTERNAL_       │                  │
+│                  │  CHATBOT_TOKEN          │                  │
+└──────────────────┘                         └──────────────────┘</pre>
+
+    <ul>
+      <li><strong>brand_repos</strong> — agent reads to know which repo to clone for a brand</li>
+      <li><strong>brand_credentials</strong> — agent uses for Capillary platform API calls</li>
+      <li><strong>knowledge_base</strong> — agent reads (Stage 3b) and writes (Stage 8) resolved tickets</li>
+      <li><strong>brand_documents</strong> — agent publishes auto-generated repo snapshots, never claims to be SDD</li>
+    </ul>
+  </section>
+
+  <!-- Slide 9: Deployment -->
+  <section class="slide">
+    <h2>Deployment — Facets / K8s</h2>
+    <div class="grid-2">
+      <div>
+        <h3>What ships</h3>
+        <ul>
+          <li><code>deploy/k8s.yaml</code> — Deployment + Service + 2 PVCs + ConfigMap</li>
+          <li><code>scripts/migrate_brand_repos.py</code> — flips <code>file://</code> → GitHub URLs</li>
+          <li><code>POST /admin/test-pull/{brand}</code> — per-brand smoke test</li>
+          <li><code>deploy/README.md</code> — step-by-step runbook + dependency checklist by team</li>
+          <li><code>DEPLOYMENT_HANDOFF.md</code> — single-doc handoff for DevOps + dev teams</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Pod hardening</h3>
+        <ul>
+          <li><span class="check">✓</span> non-root UID 1000</li>
+          <li><span class="check">✓</span> read-only root filesystem</li>
+          <li><span class="check">✓</span> <code>cap drop ALL</code></li>
+          <li><span class="check">✓</span> seccomp <code>RuntimeDefault</code></li>
+          <li><span class="check">✓</span> <code>allowPrivilegeEscalation: false</code></li>
+          <li><span class="check">✓</span> GitHub App PEM mounted file mode 0400</li>
+        </ul>
+      </div>
+    </div>
+
+    <h3>Time to deploy after dependencies are ready</h3>
+    <p>~30 minutes total: secrets (5m) → manifest apply (5m) → migration (5m) → 5-gate verification (15m).</p>
+
+    <h3>Resources per pod</h3>
+    <p class="small">CPU: 200m request / 1 limit · Memory: 512Mi request / 2Gi limit · State PVC: 5Gi · Repo cache PVC: 20Gi</p>
+  </section>
+
+  <!-- Slide 10: Guardrails -->
+  <section class="slide">
+    <h2>Guardrails &amp; safety nets</h2>
+    <table>
+      <thead><tr><th style="width:30%">Concern</th><th>Guardrail</th></tr></thead>
+      <tbody>
+        <tr>
+          <td>Speculative findings</td>
+          <td>Coverage Gate — escalates to human when confidence is low. Never posts a "best guess" RCA.</td>
+        </tr>
+        <tr>
+          <td>Bad fix applied</td>
+          <td>Approval gate (Stage 7) — fix lands in JIRA as a comment, awaits human <code>approved</code> / <code>rejected</code> reply. SLA-bounded with auto-escalation.</td>
+        </tr>
+        <tr>
+          <td>Output leaks</td>
+          <td><code>services/guardrails.py</code> — scrubs unverified specifics, redacts secrets/PII before publishing comments.</td>
+        </tr>
+        <tr>
+          <td>Code-side credential leak</td>
+          <td>3-layer push prevention (App scope · push URL rewrite · subcommand allowlist).</td>
+        </tr>
+        <tr>
+          <td>Anthropic outage</td>
+          <td>Sonnet → Haiku fallback. If both fail, agent posts Coverage Gate escalation instead of stub findings.</td>
+        </tr>
+        <tr>
+          <td>Wrong RCA after correction</td>
+          <td>Correction-driven re-run. Human comment triggers Stage 3a + 5 re-execution; agent retracts prior comment explicitly with a new "Correction" comment.</td>
+        </tr>
+        <tr>
+          <td>Stuck workflows</td>
+          <td>Approval-gate auto-escalation on SLA breach. State persisted to PVC so restarts don't lose progress.</td>
+        </tr>
+        <tr>
+          <td>Compromised installation token</td>
+          <td>Tokens are short-lived (~1h). Process-memory only. Rotation = generate new App key, restart pod (~15min, no downtime for in-flight workflows).</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Slide 11: Live demo -->
+  <section class="slide">
+    <h2>Live demo — PSV-30534</h2>
+    <p><strong>Test Abbott — User is not getting registered in Salesforce</strong></p>
+    <p class="small"><span class="badge">Brand: Abbott_HK_Demo</span> <span class="badge">Component: Integrations</span> <span class="badge warn">P1</span></p>
+
+    <h3>What the agent did</h3>
+    <pre>STAGE 1   parsed: brand=Abbott_HK_Demo component=Integrations priority=P1
+STAGE 2a  Confluence: 7 SDD pages found (cached)
+STAGE 4   routed: abbott-skill (custom AWS deployment)
+STAGE 3d  cloned https://github.com/Capillary/abbott-global.git (depth=200)
+          → 10 match(es) across 3 commit(s)
+          → matched files cited:
+              CapillarySalesforceCustomerRegistrationController.mjs:143
+              uatImplementations.json (abbott-hongkong block)
+              salesforceEventsCapillaryAdd.mjs:40
+STAGE 3a  RCA produced: 6 hypotheses ranked by likelihood</pre>
+
+    <h3>Top 3 hypotheses</h3>
+    <table>
+      <thead><tr><th>#</th><th>Hypothesis</th><th>Verified at</th><th>Likelihood</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Frontend on legacy <code>/customer/add</code> path</td><td><code>add-customer/app.mjs:113</code></td><td>~50%</td></tr>
+        <tr><td>2</td><td><code>salesforce_cr_mapping</code> row missing for <code>abbott-hongkong</code></td><td><code>:76-100</code></td><td>~25%</td></tr>
+        <tr><td>3</td><td>Missing <code>salesforce_payload</code> in body</td><td><code>:25-34</code></td><td>~15%</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Single most actionable next step</h3>
+    <p class="small">Pull CloudWatch logs for <code>add-customer</code> Lambda, market=abbott-hongkong, last 24h. Each hypothesis leaves a distinct error string in the logs.</p>
+    <div class="footer-note">
+      Repo cloned from real GitHub (verified: HEAD=<code>317aa2e</code> · 1616 commits · push URL guarded · no credentials in <code>.git/config</code>).
+    </div>
+  </section>
+
+  <!-- Slide 12: What's in v1 -->
+  <section class="slide">
+    <h2>What's done · what's next</h2>
+    <div class="grid-2">
+      <div>
+        <h3>v1 — shipped</h3>
+        <ul>
+          <li><span class="check">✓</span> 10-stage pipeline, async</li>
+          <li><span class="check">✓</span> JIRA webhook + poller</li>
+          <li><span class="check">✓</span> Confluence BRD/SDD fetch</li>
+          <li><span class="check">✓</span> Claude classification + RCA</li>
+          <li><span class="check">✓</span> Code grounding (Stage 3d)</li>
+          <li><span class="check">✓</span> GitHub App auth</li>
+          <li><span class="check">✓</span> 3-layer push prevention</li>
+          <li><span class="check">✓</span> Coverage gate</li>
+          <li><span class="check">✓</span> Approval gate + auto-escalation</li>
+          <li><span class="check">✓</span> Correction-driven re-run</li>
+          <li><span class="check">✓</span> Snapshot scheduler</li>
+          <li><span class="check">✓</span> Chatbot DB integration</li>
+          <li><span class="check">✓</span> Prompt caching (40-60% cost win)</li>
+          <li><span class="check">✓</span> Facets deploy package</li>
+          <li><span class="check">✓</span> Per-brand smoke-test endpoint</li>
+        </ul>
+      </div>
+      <div>
+        <h3>Roadmap</h3>
+        <ul>
+          <li><span class="badge accent">P0</span> Finish Stage 5 — wire skills to apply fixes against a sandbox env, post diff</li>
+          <li><span class="badge accent">P0</span> Real Stage 6 QA — run brand test suites against candidate fixes</li>
+          <li><span class="badge accent">P1</span> Multi-replica scaling — Redis-backed dedup set</li>
+          <li><span class="badge accent">P1</span> CI/CD pipeline — pytest, mypy, GitHub Actions</li>
+          <li><span class="badge accent">P2</span> Routing instrumentation — measure misroute rate before optimising</li>
+          <li><span class="badge accent">P2</span> Slack-side approval flow — react from Slack, not JIRA</li>
+          <li><span class="badge accent">P3</span> P2/P3 ticket coverage (cost gate)</li>
+          <li><span class="badge accent">P3</span> Multi-language ticket support</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 13: Cost & docs -->
+  <section class="slide">
+    <h2>Cost · docs · how to take it forward</h2>
+
+    <div class="grid-2">
+      <div>
+        <h3>Cost (Anthropic)</h3>
+        <table>
+          <thead><tr><th>Tickets / month</th><th>Anthropic spend</th></tr></thead>
+          <tbody>
+            <tr><td>500</td><td>$240</td></tr>
+            <tr><td>1,000</td><td>$480</td></tr>
+            <tr><td>2,000</td><td>$960</td></tr>
+            <tr><td>5,000</td><td>$2,400</td></tr>
+          </tbody>
+        </table>
+        <p class="small">PSV historical volume: ~800–1,500 P0/P1 / month. Budget alert: $1,000.</p>
+        <p class="small">Per-ticket cost: ~$0.48 (Sonnet RCA + classification, Haiku parse, prompt caching enabled).</p>
+      </div>
+      <div>
+        <h3>Three docs to share</h3>
+        <ul>
+          <li><span class="badge ok">USERS</span> <code>USER_GUIDE.md</code> — how to read agent comments, give corrections, approve fixes</li>
+          <li><span class="badge ok">DEVOPS</span> <code>DEPLOYMENT_HANDOFF.md</code> — architecture, config reference, day-2 ops, monitoring, rollback, roadmap</li>
+          <li><span class="badge ok">DEVOPS</span> <code>deploy/README.md</code> — step-by-step deploy runbook, dependency checklist by team</li>
+        </ul>
+
+        <h3>What you need before deploy</h3>
+        <ul>
+          <li>GitHub App on Capillary org (<code>Contents: Read</code>)</li>
+          <li>Atlassian service account API token</li>
+          <li>Anthropic API key (Tier 2+)</li>
+          <li>Image pushed to your registry</li>
+          <li>K8s namespace + PVCs</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-note" style="margin-top: 2em;">
+      <strong>Repo:</strong> <code>github.com/Capillary/psv_ai_im_chatbot</code> ·
+      <strong>main branch</strong> ·
+      <strong>Latest:</strong> <code>95d9ab5</code> (DEPLOYMENT_HANDOFF.md) ·
+      <strong>Owner:</strong> Vikas Verma
+    </div>
+  </section>
+
+  <div class="nav">
+    <button onclick="goPrev()">◀</button>
+    <span class="counter" id="counter">1 / 13</span>
+    <button onclick="goNext()">▶</button>
+  </div>
+  <div class="hint">← → keys to navigate · click slide to advance · ESC for overview</div>
+
+</div>
+
+<script>
+  const slides = document.querySelectorAll('.slide');
+  const counter = document.getElementById('counter');
+  let idx = 0;
+
+  function show(n) {
+    slides[idx].classList.remove('active');
+    idx = (n + slides.length) % slides.length;
+    slides[idx].classList.add('active');
+    counter.textContent = `${idx + 1} / ${slides.length}`;
+    location.hash = `#${idx + 1}`;
+  }
+  function goPrev() { show(idx - 1); }
+  function goNext() { show(idx + 1); }
+
+  // Keyboard nav
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { goNext(); e.preventDefault(); }
+    else if (e.key === 'ArrowLeft' || e.key === 'PageUp') { goPrev(); e.preventDefault(); }
+    else if (e.key === 'Home') { show(0); }
+    else if (e.key === 'End') { show(slides.length - 1); }
+    else if (/^[1-9]$/.test(e.key)) { show(parseInt(e.key, 10) - 1); }
+  });
+
+  // Click slide to advance
+  document.querySelectorAll('.slide').forEach(s => {
+    s.addEventListener('click', (e) => {
+      // Don't advance if user clicked on text they might want to select
+      if (window.getSelection().toString().length > 0) return;
+      // Don't advance on links / buttons / inputs
+      if (e.target.closest('a, button, input, select, textarea, pre, code')) return;
+      goNext();
+    });
+  });
+
+  // Deep link from hash
+  if (location.hash) {
+    const n = parseInt(location.hash.slice(1), 10);
+    if (!isNaN(n) && n >= 1 && n <= slides.length) show(n - 1);
+  }
+</script>
+</body>
+</html>
