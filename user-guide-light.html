@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IM Concern Assistant — User Guide (Light)</title>
+<style>
+:root {
+  --bg: #ffffff;
+  --surface: #f8fafc;
+  --card: #ffffff;
+  --border: #e2e8f0;
+  --text: #0f172a;
+  --dim: #64748b;
+  --primary: #2563eb;
+  --primary-light: #1d4ed8;
+  --accent: #6c5ce7;
+  --green: #15803d;
+  --red: #dc2626;
+  --orange: #c2410c;
+  --purple: #7c3aed;
+  --cyan: #0891b2;
+  --pink: #be185d;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:var(--bg); color:var(--text); font-family:'Segoe UI',system-ui,-apple-system,sans-serif; overflow:hidden; height:100vh; }
+
+.slides { position:relative; width:100%; height:100vh; }
+.slide { position:absolute; top:0; left:0; width:100%; height:100%; display:flex; flex-direction:column; justify-content:center; align-items:center; padding:48px 64px 100px; opacity:0; transform:translateX(60px); transition:all .5s cubic-bezier(.4,0,.2,1); pointer-events:none; overflow-y:auto; }
+.slide.active { opacity:1; transform:translateX(0); pointer-events:all; }
+.slide.prev { opacity:0; transform:translateX(-60px); }
+
+.nav { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); display:flex; align-items:center; gap:14px; z-index:100; background:var(--surface); padding:10px 20px; border-radius:40px; border:1px solid var(--border); }
+.nav-btn { width:38px; height:38px; border-radius:50%; border:1px solid var(--border); background:var(--card); color:var(--text); cursor:pointer; display:flex; align-items:center; justify-content:center; transition:.2s; font-size:14px; }
+.nav-btn:hover { background:var(--primary); border-color:var(--primary); }
+.nav-btn:disabled { opacity:.3; cursor:default; }
+.slide-counter { font-size:12px; color:var(--dim); min-width:54px; text-align:center; }
+.dots { display:flex; gap:5px; }
+.dot { width:7px; height:7px; border-radius:50%; background:var(--border); cursor:pointer; transition:.2s; }
+.dot.active { background:var(--primary); width:22px; border-radius:4px; }
+
+.progress { position:fixed; top:0; left:0; height:3px; background:linear-gradient(90deg,var(--primary),var(--accent)); transition:width .4s ease; z-index:100; }
+
+h1 { font-size:46px; font-weight:800; line-height:1.15; letter-spacing:-1px; }
+h2 { font-size:34px; font-weight:700; margin-bottom:20px; letter-spacing:-.5px; }
+h3 { font-size:18px; font-weight:600; margin-bottom:10px; }
+.gradient-text { background:linear-gradient(135deg,var(--primary),var(--accent),var(--pink)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+.subtitle { font-size:18px; color:var(--dim); margin-top:12px; line-height:1.5; max-width:780px; }
+.tag { display:inline-block; padding:4px 12px; border-radius:20px; font-size:12px; font-weight:600; }
+.tag-blue { background:rgba(79,140,255,.15); color:var(--primary-light); }
+.tag-green { background:rgba(34,197,94,.15); color:var(--green); }
+.tag-orange { background:rgba(245,158,11,.15); color:var(--orange); }
+.tag-red { background:rgba(239,68,68,.15); color:var(--red); }
+.tag-purple { background:rgba(167,139,250,.15); color:var(--purple); }
+.tag-cyan { background:rgba(6,182,212,.15); color:var(--cyan); }
+
+.title-slide { text-align:center; }
+.company-badge { font-size:13px; color:var(--dim); letter-spacing:2px; text-transform:uppercase; margin-bottom:18px; }
+.title-meta { display:flex; gap:20px; margin-top:28px; justify-content:center; flex-wrap:wrap; }
+.title-meta span { color:var(--dim); font-size:13px; }
+
+.grid-2 { display:grid; grid-template-columns:1fr 1fr; gap:20px; width:100%; max-width:1080px; }
+.grid-3 { display:grid; grid-template-columns:1fr 1fr 1fr; gap:18px; width:100%; max-width:1180px; }
+.grid-4 { display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:14px; width:100%; max-width:1180px; }
+.grid-5 { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; width:100%; max-width:1200px; }
+
+.card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; transition:.3s; box-shadow:0 1px 3px rgba(15,23,42,.05); }
+.card:hover { border-color:var(--primary); transform:translateY(-2px); box-shadow:0 8px 28px rgba(37,99,235,.18); }
+.card-icon { width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; margin-bottom:12px; font-size:22px; }
+.card h3 { margin-bottom:6px; font-size:16px; }
+.card p { font-size:13px; color:var(--dim); line-height:1.5; }
+.card .step-num { font-size:13px; color:var(--primary-light); font-weight:700; letter-spacing:1px; }
+
+.flow-row { display:flex; gap:0; align-items:center; width:100%; max-width:1200px; flex-wrap:wrap; }
+.flow-step { flex:1; min-width:140px; background:var(--card); border:1px solid var(--border); border-radius:10px; padding:14px 12px; text-align:center; }
+.flow-step .num { background:linear-gradient(135deg,var(--primary),var(--accent)); width:30px; height:30px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-weight:700; margin:0 auto 8px; font-size:13px; }
+.flow-step h4 { font-size:14px; margin-bottom:4px; }
+.flow-step p { font-size:11px; color:var(--dim); line-height:1.4; }
+.flow-arrow { color:var(--dim); font-size:20px; padding:0 4px; }
+
+table.guide { width:100%; max-width:1100px; border-collapse:collapse; font-size:13px; }
+table.guide th { background:var(--surface); color:var(--primary-light); font-weight:600; padding:10px 14px; text-align:left; border:1px solid var(--border); }
+table.guide td { background:var(--card); padding:10px 14px; border:1px solid var(--border); color:var(--text); vertical-align:top; }
+table.guide td.dim { color:var(--dim); }
+table.guide td code { background:rgba(79,140,255,.12); color:var(--primary-light); padding:2px 6px; border-radius:4px; font-family:'JetBrains Mono','Consolas',monospace; font-size:12px; }
+table.guide tr:hover td { background:var(--surface); }
+
+.highlight-box { background:linear-gradient(135deg,rgba(37,99,235,.06),rgba(108,92,231,.06)); border:1px solid rgba(79,140,255,.3); border-radius:12px; padding:20px 24px; max-width:1000px; margin-top:18px; }
+.highlight-box h3 { color:var(--primary-light); }
+.highlight-box p { font-size:14px; color:var(--text); line-height:1.6; }
+
+.kbd { display:inline-block; background:var(--card); border:1px solid var(--border); border-bottom-width:2px; padding:2px 8px; border-radius:5px; font-family:'JetBrains Mono','Consolas',monospace; font-size:12px; color:var(--primary-light); }
+
+ul.bullets { list-style:none; padding:0; max-width:920px; }
+ul.bullets li { padding:9px 0 9px 28px; position:relative; font-size:15px; line-height:1.55; color:var(--text); border-bottom:1px solid var(--border); }
+ul.bullets li:last-child { border-bottom:none; }
+ul.bullets li:before { content:"→"; position:absolute; left:6px; top:9px; color:var(--primary); font-weight:700; }
+ul.bullets li strong { color:var(--primary-light); }
+
+.do-dont { display:grid; grid-template-columns:1fr 1fr; gap:18px; max-width:1000px; width:100%; }
+.do-dont .col { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px; }
+.do-dont .col.do { border-left:3px solid var(--green); }
+.do-dont .col.dont { border-left:3px solid var(--red); }
+.do-dont .col h4 { font-size:14px; margin-bottom:10px; }
+.do-dont .col h4.do-title { color:var(--green); }
+.do-dont .col h4.dont-title { color:var(--red); }
+.do-dont .col blockquote { background:var(--surface); padding:10px 12px; border-radius:6px; font-size:13px; color:var(--text); font-style:italic; }
+
+.toolbar-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:14px; max-width:1100px; width:100%; }
+.toolbar-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px; text-align:center; }
+.toolbar-card .icon { font-size:24px; margin-bottom:8px; }
+.toolbar-card h4 { font-size:14px; margin-bottom:4px; }
+.toolbar-card p { font-size:11px; color:var(--dim); line-height:1.4; }
+
+.error-row { display:grid; grid-template-columns:1.4fr 1fr 1.6fr; gap:0; max-width:1100px; width:100%; font-size:13px; }
+.error-row > div { padding:12px 14px; background:var(--card); border:1px solid var(--border); }
+.error-row > div:first-child { border-top-left-radius:8px; }
+.error-row > div:last-child { border-top-right-radius:8px; }
+.error-row.header > div { background:var(--surface); color:var(--primary-light); font-weight:600; }
+.error-row .err { color:var(--red); font-family:'JetBrains Mono','Consolas',monospace; font-size:12px; }
+.error-row .cause { color:var(--dim); }
+
+.contact-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:18px; max-width:840px; width:100%; }
+.contact-card { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:18px; }
+.contact-card h4 { color:var(--primary-light); font-size:15px; margin-bottom:6px; }
+.contact-card p { font-size:13px; color:var(--text); line-height:1.5; }
+.contact-card code { background:var(--surface); padding:2px 6px; border-radius:4px; font-size:12px; color:var(--cyan); }
+
+.efficiency-pillar { display:flex; align-items:flex-start; gap:18px; padding:18px; background:var(--card); border:1px solid var(--border); border-radius:10px; max-width:1000px; width:100%; margin-bottom:14px; }
+.efficiency-pillar .num { background:linear-gradient(135deg,var(--primary),var(--accent)); min-width:48px; height:48px; border-radius:12px; display:flex; align-items:center; justify-content:center; font-weight:800; font-size:20px; }
+.efficiency-pillar .body h3 { color:var(--primary-light); font-size:16px; margin-bottom:6px; }
+.efficiency-pillar .body p { font-size:14px; color:var(--text); line-height:1.55; }
+
+.hint-strip { background:var(--surface); border:1px dashed var(--border); border-radius:8px; padding:10px 16px; max-width:1000px; margin-top:16px; font-size:13px; color:var(--dim); }
+.hint-strip strong { color:var(--orange); }
+</style>
+</head>
+<body>
+<div class="progress" id="progress" style="width:6.66%"></div>
+
+<div class="slides">
+
+<!-- 1. TITLE -->
+<section class="slide active title-slide">
+  <div class="company-badge">Capillary Technologies · IM Team</div>
+  <h1><span class="gradient-text">IM Concern Assistant</span></h1>
+  <h1 style="font-size:34px; margin-top:6px; color:var(--dim);">User Guide</h1>
+  <p class="subtitle">Everything an IM engineer needs to use the chatbot at peak efficiency.<br>~5 minutes to skim, lifelong return on time saved.</p>
+  <div class="title-meta">
+    <span><strong style="color:var(--primary-light);">Audience</strong> · IM team engineers</span>
+    <span><strong style="color:var(--primary-light);">Coverage</strong> · all 246 brands</span>
+    <span><strong style="color:var(--primary-light);">Updated</strong> · 2026</span>
+  </div>
+  <div class="hint-strip" style="margin-top:32px;">
+    <strong>Tip:</strong> use <span class="kbd">→</span> / <span class="kbd">←</span> arrow keys, <span class="kbd">Space</span> to advance, <span class="kbd">F</span> for full-screen.
+  </div>
+</section>
+
+<!-- 2. WHAT IT DOES -->
+<section class="slide">
+  <h2>What the chatbot does <span class="gradient-text">for you</span></h2>
+  <p class="subtitle" style="margin-bottom:32px;">A force multiplier on your existing IM process — removes 80% of the clerical work so you spend time on the actual investigation.</p>
+  <div class="grid-3">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(79,140,255,.15); color:var(--primary-light);">⚡</div>
+      <h3>Faster ticket creation</h3>
+      <p>AI pre-fills brand, component, priority, assignee. From concern paste to Jira ticket in under 5 minutes vs. 30+ today.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(167,139,250,.15); color:var(--purple);">🎯</div>
+      <h3>Better triage</h3>
+      <p>Concern automatically classified as Bug / SDD Gap / BRD Gap / CR with confidence score and SDD section quoted.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(34,197,94,.15); color:var(--green);">📋</div>
+      <h3>Required fields enforced</h3>
+      <p>Brand custom field, environment, GeoRegion, priority — never miss a required Jira field again.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(245,158,11,.15); color:var(--orange);">🔁</div>
+      <h3>Auto-coordination</h3>
+      <p>Lead emails, SLA tracking, P0 hourly reminders, escalation L1→L2→L3 — all automatic. No manual cc-ing.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(6,182,212,.15); color:var(--cyan);">🔍</div>
+      <h3>Cross-brand learning</h3>
+      <p>Knowledge base auto-learns from every resolution. The 100th similar issue gets answered in 10 seconds.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(236,72,153,.15); color:var(--pink);">📊</div>
+      <h3>Single source of truth</h3>
+      <p>War room, post-mortems, KB, runbooks, analytics — all in one place. Stop tab-switching between Jira, Confluence, email, Slack.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 3. QUICK START -->
+<section class="slide">
+  <h2>Quick Start <span class="tag tag-green">~2 minutes</span></h2>
+  <p class="subtitle">First-time setup. After this, you go straight to brand selection on every visit.</p>
+  <div style="max-width:980px; width:100%; margin-top:30px;">
+    <div class="efficiency-pillar">
+      <div class="num">1</div>
+      <div class="body">
+        <h3>Open the chatbot</h3>
+        <p>Visit the deployed chatbot URL. It's cleared for use across all 246 brands the IM team supports.</p>
+      </div>
+    </div>
+    <div class="efficiency-pillar">
+      <div class="num">2</div>
+      <div class="body">
+        <h3>Login with Atlassian SSO</h3>
+        <p>Use your <code style="background:var(--surface); padding:2px 6px; border-radius:4px; color:var(--cyan); font-size:12px;">@capillarytech.com</code> account. SSO redirects you back to the chatbot once authenticated. No password entered into the chatbot itself.</p>
+      </div>
+    </div>
+    <div class="efficiency-pillar">
+      <div class="num">3</div>
+      <div class="body">
+        <h3>Type your name once</h3>
+        <p>The chatbot asks for a display name. Stored locally; future sessions skip this step.</p>
+      </div>
+    </div>
+    <div class="efficiency-pillar">
+      <div class="num">4</div>
+      <div class="body">
+        <h3>Pick the brand</h3>
+        <p>Type 2-3 letters (e.g. <span class="kbd">Pan</span> for Pantaloons, <span class="kbd">Abb</span> for Abbott) — autocomplete shows matches. You're in the flow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 4. THE 8-STEP FLOW OVERVIEW -->
+<section class="slide">
+  <h2>The <span class="gradient-text">8-step ticket flow</span></h2>
+  <p class="subtitle" style="margin-bottom:28px;">Don't skip steps — each one builds context that the AI uses in the next. Skipping = degraded results.</p>
+  <div class="flow-row" style="margin-bottom:14px;">
+    <div class="flow-step"><div class="num">1</div><h4>Brand</h4><p>Pick from 246</p></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><div class="num">1a</div><h4>Credentials</h4><p>One-time per brand</p></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><div class="num">2</div><h4>SDD / BRD</h4><p>Auto-loaded</p></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><div class="num">3</div><h4>Concern</h4><p>Type / voice / OCR</p></div>
+  </div>
+  <div class="flow-row">
+    <div class="flow-step"><div class="num">4</div><h4>Classify</h4><p>Bug / SDD-Gap / BRD-Gap / CR</p></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><div class="num">6</div><h4>Triage</h4><p>P0/P1/P2/P3</p></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><div class="num">7</div><h4>Preview</h4><p>Edit fields</p></div>
+    <span class="flow-arrow">→</span>
+    <div class="flow-step"><div class="num">8</div><h4>Create</h4><p>+ auto-process</p></div>
+  </div>
+  <div class="highlight-box">
+    <h3>While you close the tab</h3>
+    <p>Auto-processing pipeline runs in the background (~30s): RCA via Claude, KB lookup, SDD search, brand API health check. Findings posted as a Jira comment without you waiting.</p>
+  </div>
+</section>
+
+<!-- 5. STEPS 1-2: brand + credentials + docs -->
+<section class="slide">
+  <h2>Step 1-2 — <span class="gradient-text">Setup the context</span></h2>
+  <div class="grid-3" style="margin-top:14px;">
+    <div class="card">
+      <div class="step-num">STEP 1</div>
+      <h3>Brand selection</h3>
+      <p>Searchable dropdown across all 246 brands. The choice routes credentials, SDDs, ticket fields, and AI prompts.</p>
+      <p style="margin-top:8px; color:var(--orange);">⚠ If your brand is missing, ask a lead to add it — don't pick a similar one.</p>
+    </div>
+    <div class="card">
+      <div class="step-num">STEP 1a</div>
+      <h3>Brand credentials</h3>
+      <p>Cluster + till_id + password (MD5-hashed, never re-displayed). Saved <strong>per user, per brand</strong> — first person to add a brand sets it once for the team.</p>
+    </div>
+    <div class="card">
+      <div class="step-num">STEP 1b</div>
+      <h3>Existing or new?</h3>
+      <p>Existing ticket → enter the key (e.g. <span class="kbd">PSV-30533</span>). Chatbot fetches details + runs the auto-process pipeline.</p>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-top:18px; max-width:1080px;">
+    <div class="card">
+      <div class="step-num">STEP 1c · NEO ONLY</div>
+      <h3>Inline Neo API tester</h3>
+      <p>Pick HTTP method, paste endpoint path (base URL <span class="kbd">{cluster}/x/neo/</span> auto-prefixed), paste body, auth auto-applied. Faster than Postman.</p>
+    </div>
+    <div class="card">
+      <div class="step-num">STEP 2</div>
+      <h3>SDD / BRD collection</h3>
+      <p><strong>Three branches:</strong> paste Confluence links · upload PDF/TXT/DOC · let chatbot search Confluence (SA + AG spaces).<br>All saved per-brand and shared with the whole team.</p>
+    </div>
+  </div>
+  <div class="hint-strip"><strong>Why this matters:</strong> a concern classified <em>without</em> SDD context defaults to confidence 0.3 and produces generic AI output. 2 minutes of doc lookup saves 30 minutes of follow-up.</div>
+</section>
+
+<!-- 6. STEPS 3-4: concern + classification -->
+<section class="slide">
+  <h2>Step 3-4 — <span class="gradient-text">Concern & classification</span></h2>
+  <div class="do-dont" style="margin-top:14px;">
+    <div class="col do">
+      <h4 class="do-title">✅ DO — Quality input</h4>
+      <blockquote>"Customer 1234567 redeemed 500 points but wallet shows 600 deducted. /v2/wallet/redeem returns 200 but customer status log shows DOUBLE_DEBIT. Reproduced 3 times today."</blockquote>
+      <p style="margin-top:10px; font-size:12px; color:var(--dim);">Includes: customer ID, exact endpoint, expected vs actual, frequency. AI uses every concrete identifier as a search key.</p>
+    </div>
+    <div class="col dont">
+      <h4 class="dont-title">❌ DON'T — Vague input</h4>
+      <blockquote>"Points issue"</blockquote>
+      <p style="margin-top:10px; font-size:12px; color:var(--dim);">No identifiers, no symptoms, no API. AI can't ground anything; result is generic "check the configuration" advice.</p>
+    </div>
+  </div>
+  <h3 style="margin-top:30px; color:var(--primary-light);">Concern classification (Step 4)</h3>
+  <table class="guide" style="margin-top:8px;">
+    <thead><tr><th>Class</th><th>When</th><th>Routing</th></tr></thead>
+    <tbody>
+      <tr><td><span class="tag tag-red">Bug</span></td><td>SDD covers it but reported behaviour contradicts the design</td><td>Engineering / PSV</td></tr>
+      <tr><td><span class="tag tag-orange">SDD Gap</span></td><td>BRD requires it but SDD has no design</td><td>Solutions Architect (escalate, not engineering)</td></tr>
+      <tr><td><span class="tag tag-purple">BRD Gap</span></td><td>Neither doc covers this scenario</td><td>Product Manager (definitely not engineering yet)</td></tr>
+      <tr><td><span class="tag tag-cyan">Change Request</span></td><td>User wants different behaviour than what's designed</td><td>CR workflow</td></tr>
+    </tbody>
+  </table>
+  <div class="hint-strip"><strong>Override freely</strong> if you disagree with the AI. Your override is logged for the eval layer. Frequent overrides = the AI needs tuning; rare overrides = it's calibrated.</div>
+</section>
+
+<!-- 7. STEPS 5-6: more context + AI analysis -->
+<section class="slide">
+  <h2>Step 5-6 — <span class="gradient-text">Evidence & AI analysis</span></h2>
+  <div class="grid-2" style="margin-top:14px;">
+    <div class="card">
+      <div class="step-num">STEP 5 · OPTIONAL</div>
+      <h3>More context</h3>
+      <p>Offered when classification confidence is below ~70%. Three inputs:</p>
+      <ul class="bullets" style="margin-top:8px;">
+        <li>📁 <strong>File upload</strong> — logs, HARs</li>
+        <li>📋 <strong>Paste raw text</strong> — error dumps, console output</li>
+        <li>📞 <strong>Go on a call</strong> — opens a notepad for the call transcript</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="step-num">STEP 6 · TWO CLAUDE CALLS IN PARALLEL</div>
+      <h3>Solution analysis + triage</h3>
+      <p><strong>Solution analysis</strong> — RCA hypothesis grounded in SDD content.<br><strong>Triage</strong> — priority + category with confidence.</p>
+      <ul class="bullets" style="margin-top:8px;">
+        <li><span class="tag tag-green">80%+</span> Trust unless you have specific reason</li>
+        <li><span class="tag tag-orange">50-80%</span> Review reasoning; override if you disagree</li>
+        <li><span class="tag tag-red">&lt; 50%</span> AI hedging — override based on judgement</li>
+      </ul>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <h3>Read the confidence number, not just the result</h3>
+    <p>"P1 / Bug / 87% confidence with quoted SDD section X" tells a different story than "P1 / Bug / 32%, reasoning: not enough information". Same output, very different reliability.</p>
+  </div>
+</section>
+
+<!-- 8. STEPS 7-8: ticket creation + auto-process -->
+<section class="slide">
+  <h2>Step 7-8 — <span class="gradient-text">Create & follow-up</span></h2>
+  <div class="grid-2" style="margin-top:14px;">
+    <div class="card">
+      <div class="step-num">STEP 7</div>
+      <h3>Ticket preview</h3>
+      <p>All Jira fields pre-filled. <strong>Edit anything before clicking Create</strong> — pre-fill is a starting point, not a verdict:</p>
+      <ul class="bullets" style="margin-top:8px;">
+        <li>Brand <span class="kbd">customfield_11997</span></li>
+        <li>Environment <span class="kbd">customfield_11800</span></li>
+        <li>GeoRegion <span class="kbd">customfield_11998</span></li>
+        <li>Priority + suggested assignee</li>
+      </ul>
+    </div>
+    <div class="card">
+      <div class="step-num">STEP 8</div>
+      <h3>Create + auto-process</h3>
+      <p>On click:</p>
+      <ul class="bullets" style="margin-top:8px;">
+        <li>Jira ticket created with all fields</li>
+        <li>Email to <strong>7 leads</strong> auto-fired</li>
+        <li>SLA tracker starts (P0: 1h/4h … P3: 24h/168h)</li>
+        <li>Verification record created</li>
+        <li><strong>Auto-process pipeline</strong> runs in background</li>
+      </ul>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <h3>What auto-process does (~30 seconds)</h3>
+    <p>Urgency re-detection · KB lookup · Confluence SDD search · Claude RCA · brand API health check · post findings as Jira comment · save to KB.<br>You can close the tab — everything continues.</p>
+  </div>
+  <div class="hint-strip"><strong>Plus:</strong> P0/P1 tickets are also picked up by PSV-IM-Agent (separate background service) which runs deeper analysis including <em>code-grounded RCA</em> when a brand→repo mapping exists. Result lands as another Jira comment within minutes.</div>
+</section>
+
+<!-- 9. POWER FEATURES -->
+<section class="slide">
+  <h2><span class="gradient-text">Power features</span> — save real time</h2>
+  <h3 style="margin-top:14px; color:var(--primary-light);">Natural-language commands (type directly in chat)</h3>
+  <table class="guide" style="margin-top:8px;">
+    <thead><tr><th>Command</th><th>Result</th></tr></thead>
+    <tbody>
+      <tr><td><code>check PSV-30533</code></td><td>Pulls ticket status, SLA state, latest 3 comments</td></tr>
+      <tr><td><code>runbook coupon</code></td><td>Shows the coupon-issue troubleshooting runbook</td></tr>
+      <tr><td><code>runbook points</code></td><td>Shows points-discrepancy runbook</td></tr>
+      <tr><td><code>PSV-1 PSV-2 PSV-3</code></td><td>Bulk status table across multiple tickets</td></tr>
+      <tr><td><code>handover</code></td><td>Opens war room (active P0/P1 + SLA state)</td></tr>
+      <tr><td><code>how to check points</code></td><td>Shows the canned response for that scenario</td></tr>
+    </tbody>
+  </table>
+  <div class="grid-4" style="margin-top:24px; max-width:1100px;">
+    <div class="card">
+      <div class="card-icon" style="background:rgba(236,72,153,.15);">🎤</div>
+      <h3>Voice input</h3>
+      <p>Click the mic icon. Useful in noisy environments or when typing is slow.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(34,197,94,.15);">📷</div>
+      <h3>Screenshot OCR</h3>
+      <p>Upload a screenshot — Tesseract.js extracts text on-device. No image leaves your browser.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(167,139,250,.15);">🌙</div>
+      <h3>Dark mode</h3>
+      <p>Click <span class="kbd">Theme</span> in the bottom toolbar.</p>
+    </div>
+    <div class="card">
+      <div class="card-icon" style="background:rgba(245,158,11,.15);">📤</div>
+      <h3>Export chat</h3>
+      <p>Download conversation as JSON for incident records.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 10. OTHER DASHBOARDS -->
+<section class="slide">
+  <h2>Other <span class="gradient-text">dashboards</span></h2>
+  <p class="subtitle">Linked from the bottom toolbar — direct URLs you can bookmark.</p>
+  <div class="toolbar-grid" style="margin-top:24px;">
+    <div class="toolbar-card">
+      <div class="icon">📊</div>
+      <h4>Dashboard</h4>
+      <p>Per-brand health, ticket trends, SLA compliance per priority. <code style="font-size:10px;">/dashboard.html</code></p>
+    </div>
+    <div class="toolbar-card" style="border-color:var(--red);">
+      <div class="icon">🚨</div>
+      <h4>War Room</h4>
+      <p>Live P0/P1 feed across all brands with SLA % remaining. Lead's primary view. <code style="font-size:10px;">/warroom.html</code></p>
+    </div>
+    <div class="toolbar-card">
+      <div class="icon">⚙</div>
+      <h4>Portal</h4>
+      <p>Admin: user roles, brand→repo mappings, runbooks, audit log. <code style="font-size:10px;">/portal.html</code></p>
+    </div>
+    <div class="toolbar-card" style="border-color:var(--green);">
+      <div class="icon">✓</div>
+      <h4>Verify</h4>
+      <p>Reporter's "Yes, Resolved" auto-closes the Jira ticket. <code style="font-size:10px;">/verify.html?ticket=KEY</code></p>
+    </div>
+    <div class="toolbar-card">
+      <div class="icon">📈</div>
+      <h4>Eval</h4>
+      <p>Composite score (0-100) + 16 metrics: triage accuracy, KB usage, brand-doc coverage. <code style="font-size:10px;">/api/eval/report</code></p>
+    </div>
+  </div>
+  <div class="highlight-box">
+    <h3>For active incident response — pin the War Room</h3>
+    <p>Single feed of every P0/P1 across all 246 brands beats checking individual ticket statuses. Refreshes every 30 seconds.</p>
+  </div>
+</section>
+
+<!-- 11. BEST PRACTICES -->
+<section class="slide">
+  <h2>Best practices for <span class="gradient-text">100% efficiency</span></h2>
+  <div style="max-width:1000px; width:100%; margin-top:14px;">
+    <div class="efficiency-pillar">
+      <div class="num">1</div>
+      <div class="body">
+        <h3>Always go through the chatbot, not Jira directly</h3>
+        <p>Jira-direct ticket creation skips: AI triage, classification, auto-emails, SLA, KB lookup, auto-processing. Chatbot's overhead is ~2 extra clicks; payoff is correctness and follow-up automation.</p>
+      </div>
+    </div>
+    <div class="efficiency-pillar">
+      <div class="num">2</div>
+      <div class="body">
+        <h3>Save brand credentials the first time</h3>
+        <p>One person's 90-second setup saves the whole team's 90 seconds × N future tickets. MD5-hashed, never re-displayed.</p>
+      </div>
+    </div>
+    <div class="efficiency-pillar">
+      <div class="num">3</div>
+      <div class="body">
+        <h3>Index SDDs as you find them</h3>
+        <p>Saved per-brand, shared with the whole team. Stops 3 engineers re-finding the same doc 3 times. First ticket on a new brand = 5-minute investment for everyone.</p>
+      </div>
+    </div>
+    <div class="efficiency-pillar">
+      <div class="num">4</div>
+      <div class="body">
+        <h3>Override AI triage when you know better</h3>
+        <p>Logs your override + reason. Frequent overrides on the same kind of ticket signal a tuning gap; rare overrides confirm AI is calibrated.</p>
+      </div>
+    </div>
+    <div class="efficiency-pillar">
+      <div class="num">5</div>
+      <div class="body">
+        <h3>Click "Yes, Resolved" on the verification link</h3>
+        <p>Closes the Jira ticket automatically. Updates resolution metrics. Skipping leaves tickets sitting in "Resolved" forever and skews MTTR.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 12. COMMON ERRORS -->
+<section class="slide">
+  <h2>Common <span class="gradient-text">errors & fixes</span></h2>
+  <table class="guide" style="margin-top:16px;">
+    <thead><tr><th>What you see</th><th>What it means</th><th>What to do</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><code>Could not find ticket PSV-XXXXX</code></td>
+        <td class="dim">Ticket truly doesn't exist OR your account lacks read permission OR JIRA_API_TOKEN issue on the pod</td>
+        <td>Verify ticket exists in Jira UI directly. If it does, contact devops to check JIRA_API_TOKEN on the deployed pod</td>
+      </tr>
+      <tr>
+        <td><code>Authentication required</code></td>
+        <td class="dim">Session expired or never started</td>
+        <td>Click Logout, log back in via Atlassian SSO</td>
+      </tr>
+      <tr>
+        <td>AI analysis is generic / unhelpful</td>
+        <td class="dim">No SDD/BRD context provided — Claude has nothing to ground on</td>
+        <td>Go back, add SDDs in Step 2. Confidence &lt; 70% is the early warning</td>
+      </tr>
+      <tr>
+        <td>Ticket creation fails with custom field error</td>
+        <td class="dim">A field value isn't valid for the brand (wrong GeoRegion, etc.)</td>
+        <td>Edit the ticket preview in Step 7 — dropdown only offers valid options</td>
+      </tr>
+      <tr>
+        <td><code>«unverified-service»</code> markers in output</td>
+        <td class="dim">Guardrails caught a hallucinated identifier — masked from the comment</td>
+        <td>Treat the analysis as a hypothesis. Specific names showed up that didn't exist in any input</td>
+      </tr>
+      <tr>
+        <td>Voice input doesn't work</td>
+        <td class="dim">Browser blocked microphone</td>
+        <td>Click the lock icon next to the URL → allow microphone for chatbot site</td>
+      </tr>
+      <tr>
+        <td>Search returns 0 results</td>
+        <td class="dim">Keywords too narrow OR brand mismatch</td>
+        <td>Try different keywords. Check brand spelling matches Jira's custom field exactly</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 13. FAQ -->
+<section class="slide">
+  <h2>Frequently asked <span class="gradient-text">questions</span></h2>
+  <div class="grid-2" style="margin-top:14px;">
+    <div class="card">
+      <h3 style="color:var(--primary-light);">Can two engineers work on the same ticket simultaneously?</h3>
+      <p>Yes. Both see the same brand_documents, KB, SLA. Comments fire in real-time on Jira.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--primary-light);">What if I close my browser mid-flow?</h3>
+      <p>Conversation state is lost client-side, but anything saved server-side (creds, docs, ticket) persists. Restart — saved data auto-loads.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--primary-light);">Does the chatbot read my Atlassian password?</h3>
+      <p>No. SSO uses OAuth 2.0 — chatbot never sees your password. Brand till passwords are stored as MD5 hash, never displayed back.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--primary-light);">Who shows as Reporter on Jira when I create a ticket?</h3>
+      <p>You. Ticket creation uses your OAuth session, so Reporter reflects the actual IM engineer. Comments and reads use the service account.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--primary-light);">Difference between chatbot and PSV-IM-Agent?</h3>
+      <p>Chatbot = the UI you use directly. Agent = background service that auto-processes P0/P1 tickets via Jira webhook, posts deeper code-grounded findings.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--primary-light);">Does the AI use my data for training?</h3>
+      <p>No. Anthropic's Claude API doesn't use customer prompts for training. Concern text and SDD content stay within the request/response loop.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 14. REACHING 100% -->
+<section class="slide">
+  <h2>Reaching <span class="gradient-text">100% efficiency</span></h2>
+  <p class="subtitle" style="margin-bottom:30px;">Three habits separate occasional users from power users.</p>
+  <div style="max-width:1000px; width:100%;">
+    <div class="efficiency-pillar" style="border-left:3px solid var(--green);">
+      <div class="num" style="background:linear-gradient(135deg,var(--green),var(--cyan));">✓</div>
+      <div class="body">
+        <h3>Always finish the verification flow</h3>
+        <p>"Yes, Resolved" or "No, still open" — closes the loop both for the customer and for the eval layer. Skipping leaves data orphaned and skews resolution metrics.</p>
+      </div>
+    </div>
+    <div class="efficiency-pillar" style="border-left:3px solid var(--primary);">
+      <div class="num" style="background:linear-gradient(135deg,var(--primary),var(--accent));">📚</div>
+      <div class="body">
+        <h3>Index docs as you find them</h3>
+        <p>Treat the first ticket for any new brand as a 5-minute investment that benefits every future ticket on that brand. Confluence URL paste in Step 2 takes 30 seconds.</p>
+      </div>
+    </div>
+    <div class="efficiency-pillar" style="border-left:3px solid var(--purple);">
+      <div class="num" style="background:linear-gradient(135deg,var(--purple),var(--pink));">🧭</div>
+      <div class="body">
+        <h3>Read the triage confidence and the reasoning, not just outputs</h3>
+        <p>When you understand why the AI said "P1 / Bug / SDD section X", you'll know when to trust it and when to override. The "why" is always shown — it's right there.</p>
+      </div>
+    </div>
+  </div>
+  <div class="highlight-box" style="margin-top:24px;">
+    <h3>Net effect</h3>
+    <p>Engineers who do these three consistently: ticket-handling time drops from ~30-60 minutes to ~5-10 minutes per concern, with measurably better triage accuracy and SLA compliance.</p>
+  </div>
+</section>
+
+<!-- 15. CONTACT -->
+<section class="slide title-slide">
+  <h1>You're <span class="gradient-text">ready</span></h1>
+  <p class="subtitle">Open the chatbot, pick your brand, and let it do the clerical work.</p>
+  <div class="contact-grid" style="margin-top:36px;">
+    <div class="contact-card">
+      <h4>🐛 Bug or feature request</h4>
+      <p>Create a PSV ticket with label <code>chatbot-bug</code> or <code>chatbot-fr</code>. The team monitors that label.</p>
+    </div>
+    <div class="contact-card">
+      <h4>💬 Lead questions</h4>
+      <p><code>vikas.verma@capillarytech.com</code> (project owner)</p>
+    </div>
+    <div class="contact-card">
+      <h4>🔐 Atlassian / OAuth issues</h4>
+      <p>ACM project (Access Control Management) — open a Jira-Access ticket.</p>
+    </div>
+    <div class="contact-card">
+      <h4>🚨 Operational issues</h4>
+      <p><code>#im-team</code> Slack channel — chatbot down, SLA misses, eval anomalies.</p>
+    </div>
+  </div>
+  <div class="hint-strip" style="margin-top:30px;">
+    <strong>Remember:</strong> the chatbot is a force multiplier on your existing process — not a replacement. Use it consistently and the team's ticket throughput compounds.
+  </div>
+</section>
+
+</div>
+
+<div class="nav">
+  <button class="nav-btn" id="prev-btn" onclick="navigate(-1)">←</button>
+  <span class="slide-counter" id="counter">1 / 15</span>
+  <div class="dots" id="dots"></div>
+  <button class="nav-btn" id="next-btn" onclick="navigate(1)">→</button>
+</div>
+
+<script>
+const slides = document.querySelectorAll('.slide');
+const dotsEl = document.getElementById('dots');
+const counter = document.getElementById('counter');
+const progress = document.getElementById('progress');
+let current = 0;
+const total = slides.length;
+
+for (let i = 0; i < total; i++) {
+  const dot = document.createElement('div');
+  dot.className = 'dot' + (i === 0 ? ' active' : '');
+  dot.onclick = () => goTo(i);
+  dotsEl.appendChild(dot);
+}
+
+function goTo(n) {
+  if (n < 0 || n >= total) return;
+  slides[current].classList.remove('active');
+  slides[current].classList.add('prev');
+  current = n;
+  slides.forEach((s, i) => {
+    s.classList.remove('active', 'prev');
+    if (i === current) s.classList.add('active');
+  });
+  updateUI();
+}
+function navigate(dir) { goTo(current + dir); }
+function updateUI() {
+  counter.textContent = `${current + 1} / ${total}`;
+  progress.style.width = `${((current + 1) / total) * 100}%`;
+  document.getElementById('prev-btn').disabled = current === 0;
+  document.getElementById('next-btn').disabled = current === total - 1;
+  dotsEl.querySelectorAll('.dot').forEach((d, i) => {
+    d.className = 'dot' + (i === current ? ' active' : '');
+  });
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); navigate(1); }
+  if (e.key === 'ArrowLeft') { e.preventDefault(); navigate(-1); }
+  if (e.key === 'Home') goTo(0);
+  if (e.key === 'End') goTo(total - 1);
+  if (e.key === 'f' || e.key === 'F') {
+    if (document.fullscreenElement) document.exitFullscreen();
+    else document.documentElement.requestFullscreen();
+  }
+});
+let touchX = 0;
+document.addEventListener('touchstart', e => touchX = e.touches[0].clientX);
+document.addEventListener('touchend', e => {
+  const diff = touchX - e.changedTouches[0].clientX;
+  if (Math.abs(diff) > 50) navigate(diff > 0 ? 1 : -1);
+});
+updateUI();
+</script>
+</body>
+</html>
